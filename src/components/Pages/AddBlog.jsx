@@ -31,7 +31,7 @@ const AddBlog = () => {
     e.preventDefault();
     const completeFormData = { ...formData, authorEmail, postedTime };
     console.log("Form Data Submitted:", completeFormData);
-    axios.post("http://localhost:5000/blogs", completeFormData).then((res) => {
+    axios.post("http://localhost:5000/blogs", completeFormData,{withCredentials: 'include'}).then((res) => {
       if (res.data.acknowledged) {
         Swal.fire({
           position: "top-center",

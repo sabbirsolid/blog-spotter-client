@@ -19,7 +19,7 @@ const AllBlogs = () => {
     "Lifestyle",
     "Education",
     "Travel",
-  ];
+  ]; // Static categories array
 
   const numberOfPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
@@ -31,7 +31,7 @@ const AllBlogs = () => {
       .then((data) => setCount(data.count));
   }, []);
 
-  
+  // Fetch blogs based on pagination, category, and search query
   useEffect(() => {
     const query = `http://localhost:5000/blogs?page=${currentPage}&size=${itemsPerPage}${
       selectedCategory ? `&category=${selectedCategory}` : ""
@@ -58,11 +58,12 @@ const AllBlogs = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(0);
+    setCurrentPage(0); // Reset to first page when performing a new search
   };
 // wishlist
   const handleWishList = (_id) => {
     const selectedBlog = blogs?.find((blog) => blog._id === _id);
+
     if (!user?.email) {
       // If the user is not logged in, show a warning message
       Swal.fire({
@@ -85,7 +86,6 @@ const AllBlogs = () => {
           showConfirmButton: true,
         });
       } else {
-        console.log(res.data);
         Swal.fire({
           position: "top-center",
           icon: "error",
@@ -97,7 +97,7 @@ const AllBlogs = () => {
   };
 
   return (
-    <div className=" p-4">
+    <div className="shop-container p-4">
       <h1 className="text-3xl font-bold text-center mb-6">All Blogs</h1>
 
       <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">

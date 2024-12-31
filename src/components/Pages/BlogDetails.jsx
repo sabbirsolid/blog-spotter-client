@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Axios/useAxiosSecure";
 
 const BlogDetails = () => {
   const data = useLoaderData();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-
+  // const axiosSecure = useAxiosSecure();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
 
@@ -30,6 +31,12 @@ const BlogDetails = () => {
         setComments(data);
       });
   }, [_id]);
+
+  // useEffect(() => {
+  //   axiosSecure
+  //   .get(`/comments?email=${user.email}`)
+  //   .then((res) => setComments(res.data))
+  // },[_id]);
 
   // Handle comment submission
   const handleCommentSubmit = (e) => {
@@ -124,7 +131,6 @@ const BlogDetails = () => {
       {/* Comment Section */}
       <div className="comments-section">
         <h2 className="text-2xl font-semibold mb-4">Comments</h2>
-
         {/* Display Comments */}
         <div className="comments-list mb-6 space-y-4">
           {comments?.map((comment) => (

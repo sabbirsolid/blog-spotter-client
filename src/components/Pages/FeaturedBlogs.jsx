@@ -11,7 +11,9 @@ const FeaturedBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/featured")
+      .get("http://localhost:5000/featured", {
+        withCredentials: 'include'
+      })
       .then((res) => setFeatured(res.data))
       .catch((error) => console.error("Error fetching featured blogs:", error));
   }, []);
