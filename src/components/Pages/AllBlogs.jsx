@@ -1,149 +1,10 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-
-// const AllBlogs = () => {
-//   const [blogs, setBlogs] = useState([]);
-//   const [search, setSearch] = useState("");
-//   const [category, setCategory] = useState("");
-//   const [page, setPage] = useState(1);
-//   const [totalPages, setTotalPages] = useState(0);
-
-//   const categories = ["Technology", "Health", "Lifestyle", "Education", "Travel"];
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     fetchBlogs();
-//   }, [page, category, search]);
-
-//   const fetchBlogs = async () => {
-//     try {
-//       const response = await axios.get("http://localhost:5000/blogs", {
-//         params: {
-//           page,
-//           limit: 5,
-//           category,
-//           search,
-//         },
-//       });
-//       setBlogs(response.data.blogs);
-//       setTotalPages(response.data.totalPages);
-//     } catch (error) {
-//       console.error("Error fetching blogs:", error);
-//     }
-//   };
-
-//   const addToWishlist = async (blog) => {
-//     try {
-//       await axios.post("http://localhost:5000/wishlist", blog);
-//       alert("Added to wishlist!");
-//     } catch (error) {
-//       console.error("Error adding to wishlist:", error);
-//     }
-//   };
-
-//   const handleSearchChange = (e) => setSearch(e.target.value);
-//   const handleCategoryChange = (e) => setCategory(e.target.value);
-
-//   return (
-//     <div className="min-h-screen bg-gray-100 py-8 px-4">
-//       <div className="max-w-4xl mx-auto">
-//         <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">All Blogs</h1>
-
-//         <div className="flex flex-col md:flex-row md:justify-between gap-4 mb-6">
-//           <input
-//             type="text"
-//             placeholder="Search by title"
-//             value={search}
-//             onChange={handleSearchChange}
-//             className="w-full md:w-1/2 px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-//           />
-
-//           <select
-//             value={category}
-//             onChange={handleCategoryChange}
-//             className="w-full md:w-1/4 px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-//           >
-//             <option value="">All Categories</option>
-//             {categories.map((cat) => (
-//               <option key={cat} value={cat}>
-//                 {cat}
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//           {blogs.map((blog) => (
-//             <div key={blog._id} className="bg-white rounded-lg shadow-md overflow-hidden">
-//               <img
-//                 src={blog.imageUrl}
-//                 alt={blog.title}
-//                 className="w-full h-48 object-cover"
-//               />
-//               <div className="p-4">
-//                 <h2 className="text-xl font-semibold text-gray-800">{blog.title}</h2>
-//                 <p className="text-gray-600 text-sm mb-2">Category: {blog.category}</p>
-//                 <p className="text-gray-700 mb-4">{blog.shortDescription}</p>
-//                 <div className="flex justify-between items-center">
-//                   <button
-//                     onClick={() => navigate(`/blogs/${blog._id}`)}
-//                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-//                   >
-//                     Details
-//                   </button>
-//                   <button
-//                     onClick={() => addToWishlist(blog)}
-//                     className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-//                   >
-//                     Wishlist
-//                   </button>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         <div className="flex justify-center items-center mt-8">
-//           <button
-//             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-//             disabled={page === 1}
-//             className="px-4 py-2 mx-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 disabled:opacity-50"
-//           >
-//             Previous
-//           </button>
-
-//           <span className="text-gray-800 font-medium">Page {page} of {totalPages}</span>
-
-//           <button
-//             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-//             disabled={page === totalPages}
-//             className="px-4 py-2 mx-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 disabled:opacity-50"
-//           >
-//             Next
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AllBlogs;
-
-
-// import React, { useEffect, useState } from 'react';
-// import { addToDb, deleteShoppingCart, getShoppingCart } from '../../utilities/fakedb';
-// import Cart from '../Cart/Cart';
-// import Product from '../Product/Product';
-// import './Shop.css';
-
 import axios from "axios";
 import {  useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
 
-const Shop = () => {
+const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -158,7 +19,7 @@ const Shop = () => {
     "Lifestyle",
     "Education",
     "Travel",
-  ]; // Static categories array
+  ];
 
   const numberOfPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
@@ -170,7 +31,7 @@ const Shop = () => {
       .then((data) => setCount(data.count));
   }, []);
 
-  // Fetch blogs based on pagination, category, and search query
+  
   useEffect(() => {
     const query = `http://localhost:5000/blogs?page=${currentPage}&size=${itemsPerPage}${
       selectedCategory ? `&category=${selectedCategory}` : ""
@@ -197,12 +58,11 @@ const Shop = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(0); // Reset to first page when performing a new search
+    setCurrentPage(0);
   };
 // wishlist
   const handleWishList = (_id) => {
     const selectedBlog = blogs?.find((blog) => blog._id === _id);
-
     if (!user?.email) {
       // If the user is not logged in, show a warning message
       Swal.fire({
@@ -225,6 +85,7 @@ const Shop = () => {
           showConfirmButton: true,
         });
       } else {
+        console.log(res.data);
         Swal.fire({
           position: "top-center",
           icon: "error",
@@ -236,7 +97,7 @@ const Shop = () => {
   };
 
   return (
-    <div className="shop-container p-4">
+    <div className=" p-4">
       <h1 className="text-3xl font-bold text-center mb-6">All Blogs</h1>
 
       <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
@@ -339,5 +200,5 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+export default AllBlogs;
 
