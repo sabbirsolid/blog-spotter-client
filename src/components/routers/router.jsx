@@ -47,14 +47,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/add-blog",
-    element: (
-      <PrivateRoute>
-        <AddBlog></AddBlog>
-      </PrivateRoute>
-    ),
-  },
-  {
     path: "/wishlist",
     element: (
       <PrivateRoute>
@@ -63,14 +55,26 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/add-blog",
+    element: (
+      <PrivateRoute>
+        <AddBlog></AddBlog>
+      </PrivateRoute>
+    ),
+  },
+  
+  {
     path: "/update/:id",
     element: (
       <PrivateRoute>
         <UpdatePage />
       </PrivateRoute>
     ),
+    // loader: ({ params }) =>
+    //   fetch(`http://localhost:5000/update/${params.id}`),
     loader: ({ params }) =>
       fetch(`http://localhost:5000/update/${params.id}`),
+    
   },
     
   {

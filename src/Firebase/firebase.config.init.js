@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAATXabcjhKUeCJ2W7eh5y-RR_ai03jL10",
-  authDomain: "blog-spotter.firebaseapp.com",
-  projectId: "blog-spotter",
-  storageBucket: "blog-spotter.firebasestorage.app",
-  messagingSenderId: "937812746931",
-  appId: "1:937812746931:web:aabe86d8fbd526c23c06c6",
+  apiKey:import.meta.env.VITE_apiKey, 
+  authDomain:import.meta.env.VITE_authDomain, 
+  projectId:import.meta.env.VITE_projectId, 
+  storageBucket:import.meta.env.VITE_storageBucket, 
+  messagingSenderId:import.meta.env.VITE_messagingSenderId, 
+  appId:import.meta.env.VITE_appId
 };
 
 // Initialize Firebase

@@ -1,30 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import useAxiosSecure from '../Axios/useAxiosSecure';
+import { AuthContext } from '../Providers/AuthProvider';
 
 const WishList = () => {
   const [data, setData] = useState([]);
-  console.log(data);
+  const {user}  = useContext(AuthContext);
+  // console.log(data);
+  const axiosSecure = useAxiosSecure();
 
   // Fetch data from the server
+  // useEffect(() => {
+  //   axios.get('http://localhost:5000/wishlist')
+  //     .then(res => {
+  //       setData(res.data); // Update state with the fetched data
+  //     })
+  //     .catch(err => console.error("Error fetching wishlist data:", err));
+  // }, []);
+
+  // axiosSecure.get(`/wishlist?email=${user.email}`).then((res) => setData(res.data))
   useEffect(() => {
-    axios.get('http://localhost:5000/wishlist')
-      .then(res => {
-        setData(res.data); // Update state with the fetched data
-      })
-      .catch(err => console.error("Error fetching wishlist data:", err));
-  }, []);
+    const fetchWishlist = async () => {
+      try {
+        const response = await axiosSecure.get(`/wishlist?email=${user.email}`);
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching wishlist data:", error);
+      }
+    };
+  
+    if (user?.email) {
+      fetchWishlist();
+    }
+  }, [user?.email, axiosSecure]); // Add dependencies
+  
 
   // Handle remove button click
-  const handleRemove = (itemId) => {
-    // Call your API to remove the item from the wishlist
-    axios.delete(`http://localhost:5000/wishlist/${itemId}`)
-      .then(() => {
-        alert("Item removed from wishlist");
-        setData(data.filter(item => item._id !== itemId)); // Update the local state
-      })
-      .catch(err => console.error("Error removing item:", err));
+  // const handleRemove = (itemId) => {
+  //   // Call your API to remove the item from the wishlist
+  //   axios.delete(`http://localhost:5000/wishlist/${itemId}`)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch(err => console.error("Error removing item:", err));
+  // };
+
+  const handleRemove = async (itemId) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/wishlist/${itemId}`);
+      if (response.status === 200) {
+        // Filter out the deleted item from the local state
+        setData((prevData) => prevData.filter((item) => item._id !== itemId));
+      } else {
+        console.error("Failed to delete item:", response.data);
+      }
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
   };
+  
 
   return (
     <div className="p-2">

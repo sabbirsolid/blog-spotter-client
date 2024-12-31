@@ -1,8 +1,13 @@
+import Banner from "./HomeItems/Banner";
+import Newsletter from "./HomeItems/Newsletter";
+import RecentBlogs from "./HomeItems/RecentBlogs";
 
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <Banner></Banner>
+            <RecentBlogs></RecentBlogs>
+            <Newsletter></Newsletter>
         </div>
     );
 };
