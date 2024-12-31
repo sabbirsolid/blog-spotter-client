@@ -18,25 +18,25 @@ const PopularCategories = () => {
 
   return (
     <motion.div
-      className="max-w-screen-xl mx-auto py-8 px-4"
+      className="max-w-screen-xl mx-auto py-12 px-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <h2 className="text-3xl font-semibold text-center mb-6">
+      <h2 className="text-4xl font-bold text-center mb-10 text-indigo-600">
         Popular Categories
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {categories.map((category, index) => (
           <motion.div
             key={index}
-            className="rounded-lg p-6 shadow-md hover:shadow-lg text-center transition-shadow duration-300"
-            initial={{ x: -200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
+            className="rounded-lg p-6 shadow-md bg-gradient-to-r from-blue-800 to-indigo-800 text-white text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
           >
-            <h3 className="text-lg font-semibold">{category.name}</h3>
-            <p className="">Blogs: {category.count}</p>
+            <h3 className="text-2xl font-semibold mb-2">{category.name}</h3>
+            <p className="text-gray-300">Blogs: {category.count}</p>
           </motion.div>
         ))}
       </div>
