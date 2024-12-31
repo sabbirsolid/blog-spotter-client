@@ -60,7 +60,7 @@ const RecentBlogs = () => {
         {recent.map((blog) => (
           <div
             key={blog._id}
-            className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            className=" shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
             <img
               src={blog.imageUrl}
@@ -69,7 +69,7 @@ const RecentBlogs = () => {
             />
             <div className="p-4">
               <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className=" text-sm mb-4">
                 {blog.shortDescription}
               </p>
               <div className="flex justify-between items-center">
