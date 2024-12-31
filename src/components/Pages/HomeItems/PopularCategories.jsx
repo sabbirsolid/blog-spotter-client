@@ -1,5 +1,8 @@
+
+
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from 'framer-motion';
 
 const PopularCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -16,20 +19,28 @@ const PopularCategories = () => {
   }, []);
 
   return (
-    <div className="max-w-screen-xl mx-auto py-8 px-4">
+    <motion.div
+      className="max-w-screen-xl mx-auto py-8 px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
       <h2 className="text-3xl font-semibold text-center mb-6">Popular Categories</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category, index) => (
-          <div
+          <motion.div
             key={index}
-            className=" rounded-lg p-6 shadow-md hover:shadow-lg text-center transition-shadow duration-300"
+            className="rounded-lg p-6 shadow-md hover:shadow-lg text-center transition-shadow duration-300"
+            initial={{ x: -200, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: index * 0.1 }}
           >
             <h3 className="text-lg font-semibold">{category.name}</h3>
             <p className="">Blogs: {category.count}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

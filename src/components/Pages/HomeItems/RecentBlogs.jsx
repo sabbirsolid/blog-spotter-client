@@ -1,26 +1,26 @@
+
+
+
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { motion } from "framer-motion";
 
 const RecentBlogs = () => {
   const [recent, setRecent] = useState([]);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/recent-blogs")
-      .then((res) => {
-        setRecent(res.data);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch recent blogs:", err);
-      });
+      .then((res) => setRecent(res.data))
+      .catch((err) => console.error("Failed to fetch recent blogs:", err));
   }, []);
 
   const handleWishList = (_id) => {
-    const selectedBlog = recent?.find((blog) => blog._id === _id);
+    const selectedBlog = recent.find((blog) => blog._id === _id);
 
     if (!user?.email) {
       Swal.fire({
@@ -33,7 +33,6 @@ const RecentBlogs = () => {
     }
 
     const blogWithUser = { ...selectedBlog, email: user.email };
-    console.log(blogWithUser);
     axios.post("http://localhost:5000/wishlist", blogWithUser).then((res) => {
       if (res.data.acknowledged) {
         Swal.fire({
@@ -54,40 +53,55 @@ const RecentBlogs = () => {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto py-8 px-4">
-      <h2 className="text-3xl font-semibold text-center mb-6">Recent Blogs</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="max-w-screen-xl mx-auto py-12 px-4">
+      <motion.h2
+        initial={{ y: -10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="text-4xl font-bold text-center mb-8 "
+      >
+        Recent Blogs
+      </motion.h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {recent.map((blog) => (
-          <div
+          <motion.div
             key={blog._id}
-            className=" shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             <img
               src={blog.imageUrl}
               alt={blog.title}
-              className="w-full h-48 object-cover"
+              className="w-full h-52 object-cover"
             />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-              <p className=" text-sm mb-4">
-                {blog.shortDescription}
+            <div className="p-5 ">
+              <h3 className="text-2xl font-semibold  mb-2">
+                {blog.title}
+              </h3>
+              <p className=" mb-4">
+                {blog.shortDescription.length > 100
+                  ? `${blog.shortDescription.slice(0, 100)}...`
+                  : blog.shortDescription}
               </p>
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => handleWishList(blog._id)}
-                  className="bg-gray-800 text-white px-4 py-2 text-sm rounded hover:bg-gray-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300"
                 >
                   Add to Wishlist
                 </button>
                 <Link
                   to={`/blogs/${blog._id}`}
-                  className="text-blue-500 text-sm hover:underline"
+                  className="text-blue-600 font-medium hover:underline"
                 >
                   View Details
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

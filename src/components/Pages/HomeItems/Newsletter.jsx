@@ -1,25 +1,30 @@
+
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { motion } from 'framer-motion';
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (email) {
-      // Show success toast message
       toast.success("Thank you for subscribing to our newsletter!");
       setEmail(''); // Clear the input field
     } else {
-      // Show error toast message
       toast.error("Please enter a valid email address.");
     }
   };
 
   return (
-    <section className="bg-gray-800 text-white py-20 px-6 sm:px-12 lg:px-24">
+    <motion.section
+      className="bg-gray-800 text-white py-20 px-6 sm:px-12 lg:px-24"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
       <div className="container mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-6">
           Subscribe to Our Newsletter
@@ -45,9 +50,7 @@ const Newsletter = () => {
           </button>
         </form>
       </div>
-
-      {/* Toast container */}
-    </section>
+    </motion.section>
   );
 };
 

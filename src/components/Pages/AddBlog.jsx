@@ -44,19 +44,19 @@ const AddBlog = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+    <div className="flex justify-center items-center min-h-screen  px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-lg p-6 w-full max-w-lg space-y-4"
+        className=" shadow-md rounded-lg p-6 w-full max-w-lg space-y-4"
       >
-        <h2 className="text-2xl font-bold text-gray-800 text-center">
+        <h2 className="text-2xl font-bold  text-center">
           Add a Blog
         </h2>
 
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium "
           >
             Title
           </label>
@@ -75,7 +75,7 @@ const AddBlog = () => {
         <div>
           <label
             htmlFor="imageUrl"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium "
           >
             Image URL
           </label>
@@ -94,7 +94,7 @@ const AddBlog = () => {
         <div>
           <label
             htmlFor="category"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium "
           >
             Category
           </label>
@@ -118,7 +118,7 @@ const AddBlog = () => {
         <div>
           <label
             htmlFor="shortDescription"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium "
           >
             Short Description
           </label>
@@ -137,7 +137,7 @@ const AddBlog = () => {
         <div>
           <label
             htmlFor="longDescription"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium "
           >
             Long Description
           </label>
