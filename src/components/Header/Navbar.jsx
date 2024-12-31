@@ -11,168 +11,142 @@ const Navbar = () => {
         to="/"
         className={({ isActive }) =>
           isActive
-            ? "text-indigo-600 font-semibold flex items-center gap-1 border-b-2 border-indigo-600"
-            : "hover:text-indigo-600 flex items-center gap-1 transition-colors duration-200"
+            ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg font-semibold shadow-md"
+            : "text-gray-200 hover:text-white px-4 py-2 transition-colors duration-300"
         }
-      >Home
+      >
+        Home
       </NavLink>
       <NavLink
         to="/add-blog"
         className={({ isActive }) =>
           isActive
-            ? "text-indigo-600 font-semibold flex items-center gap-1 border-b-2 border-indigo-600"
-            : "hover:text-indigo-600 flex items-center gap-1 transition-colors duration-200"
+            ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg font-semibold shadow-md"
+            : "text-gray-200 hover:text-white px-4 py-2 transition-colors duration-300"
         }
-      >Add Blog
+      >
+        Add Blog
       </NavLink>
-
-      
-        <NavLink
-          to="/all-blogs"
-          className={({ isActive }) =>
-            isActive
-              ? "text-indigo-600 font-semibold flex items-center gap-1 border-b-2 border-indigo-600"
-              : "hover:text-indigo-600 flex items-center gap-1 transition-colors duration-200"
-          }
-        > All Blogs
-        </NavLink>
+      <NavLink
+        to="/all-blogs"
+        className={({ isActive }) =>
+          isActive
+            ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg font-semibold shadow-md"
+            : "text-gray-200 hover:text-white px-4 py-2 transition-colors duration-300"
+        }
+      >
+        All Blogs
+      </NavLink>
       <NavLink
         to="/featured-blogs"
         className={({ isActive }) =>
           isActive
-            ? "text-indigo-600 font-semibold flex items-center gap-1 border-b-2 border-indigo-600"
-            : "hover:text-indigo-600 flex items-center gap-1 transition-colors duration-200"
+            ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg font-semibold shadow-md"
+            : "text-gray-200 hover:text-white px-4 py-2 transition-colors duration-300"
         }
-      >Featured Blogs
+      >
+        Featured Blogs
       </NavLink>
       <NavLink
         to="/wishlist"
         className={({ isActive }) =>
           isActive
-            ? "text-indigo-600 font-semibold flex items-center gap-1 border-b-2 border-indigo-600"
-            : "hover:text-indigo-600 flex items-center gap-1 transition-colors duration-200"
+            ? "text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg font-semibold shadow-md"
+            : "text-gray-200 hover:text-white px-4 py-2 transition-colors duration-300"
         }
-      >Wish List
+      >
+        Wish List
       </NavLink>
     </>
   );
 
   return (
-    <div className="navbar  shadow-lg lg:px-6">
-      {/* Navbar Start */}
-      <div className="navbar-start">
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="to-indigo-600 hover:from-blue-600 hover:to-indigo-700 lg:hidden"
-            aria-label="Menu"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content  rounded-lg shadow-lg mt-3 w-52 space-y-2 p-2 z-10"
-          >
-            {links}
-          </ul>
-        </div>
-        <Link 
-  to="/" 
-  className="text-4xl font-extrabold hidden lg:block">
-  <span className="text-blue-600">Discount</span>
-  <span className="text-indigo-600">Pro</span>
-</Link>
-
-
-      </div>
-
-      {/* Navbar Center */}
-      <div className="navbar-start lg:hidden">
-        {user ? (
-          <p className=" text-sm">
-            Welcome,{" "}
-            <span className="font-semibold text-indigo-600">
-              {user.displayName}
-            </span>
-            !
-          </p>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className="navbar-center hidden lg:flex lg:flex-col justify-center">
-        {user ? (
-          <p className=" text-lg font-medium">
-            Welcome,{" "}
-            <span className="font-semibold text-indigo-600">
-              {user.displayName}
-            </span>
-            !
-          </p>
-        ) : (
-          ""
-        )}
-        <ul className="menu menu-horizontal space-x-6 ">
-          {links}
-        </ul>
-      </div>
-
-      {/* Navbar End */}
-      <div className="navbar-end flex items-center space-x-2">
-        {user ? (
-          <>
-            <div className="flex items-center space-x-1">
-             
-
-              {user.photoURL && (
-                <Link to="/private/my-profile">
-                  <img
-                    src={user.photoURL}
-                    alt="Profile"
-                    className="w-10 h-10 rounded-full object-cover border border-gray-200 shadow-sm"
-                  />
-                </Link>
-              )}
-            </div>
+    <nav className="bg-gradient-to-r from-blue-800 to-indigo-800 shadow-lg text-gray-100">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Navbar Start */}
+        <div className="flex items-center">
+          <div className="dropdown lg:hidden relative z-50">
             <button
-              onClick={logOut}
-              className="px-2 py-2  font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
+              tabIndex={0}
+              className="text-white focus:outline-none"
+              aria-label="Menu"
             >
-              Logout
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
             </button>
-          </>
-        ) : (
-          <div className="space-x-3">
-            <Link
-              to="/login"
-              className="px-2 py-2  font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-gray-800 rounded-lg shadow-lg mt-3 w-52 space-y-2 p-3 absolute top-full left-0 z-50"
             >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="px-2 py-2 font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
-            >
-              Register
-            </Link>
+              {links}
+            </ul>
           </div>
-        )}
+          <Link
+            to="/"
+            className="text-3xl font-bold hidden lg:block tracking-wide"
+          >
+            <span className="text-blue-400">Blog</span>
+            <span className="text-indigo-400">Spotter</span>
+          </Link>
+        </div>
+
+        {/* Navbar Center */}
+        <div className="hidden lg:flex lg:space-x-6">{links}</div>
+
+        {/* Navbar End */}
+        <div className="flex items-center space-x-4">
+          {user ? (
+            <>
+              <div className="flex items-center space-x-2">
+                {user.photoURL && (
+                  <Link to="/private/my-profile">
+                    <img
+                      src={user.photoURL}
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-indigo-500 shadow-sm"
+                    />
+                  </Link>
+                )}
+              </div>
+              <button
+                onClick={logOut}
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <div className="space-x-3">
+              <Link
+                to="/login"
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
+              >
+                Register
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </nav>
   );
 };
+
 export default Navbar;
