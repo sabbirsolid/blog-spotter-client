@@ -1,6 +1,3 @@
-
-
-
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -14,9 +11,8 @@ const RecentBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/recent-blogs")
-      .then((res) => setRecent(res.data))
-      .catch((err) => console.error("Failed to fetch recent blogs:", err));
+      .get("https://blog-spotter-server.vercel.app/recent-blogs")
+      .then((res) => setRecent(res.data));
   }, []);
 
   const handleWishList = (_id) => {
@@ -33,23 +29,25 @@ const RecentBlogs = () => {
     }
 
     const blogWithUser = { ...selectedBlog, email: user.email };
-    axios.post("http://localhost:5000/wishlist", blogWithUser).then((res) => {
-      if (res.data.acknowledged) {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Added to Wishlist successfully!",
-          showConfirmButton: true,
-        });
-      } else {
-        Swal.fire({
-          position: "top-center",
-          icon: "error",
-          title: "Failed to add to Wishlist.",
-          showConfirmButton: true,
-        });
-      }
-    });
+    axios
+      .post("https://blog-spotter-server.vercel.app/wishlist", blogWithUser)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Added to Wishlist successfully!",
+            showConfirmButton: true,
+          });
+        } else {
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Failed to add to Wishlist.",
+            showConfirmButton: true,
+          });
+        }
+      });
   };
 
   return (
@@ -78,9 +76,7 @@ const RecentBlogs = () => {
               className="w-full h-52 object-cover"
             />
             <div className="p-5 ">
-              <h3 className="text-2xl font-semibold  mb-2">
-                {blog.title}
-              </h3>
+              <h3 className="text-2xl font-semibold  mb-2">{blog.title}</h3>
               <p className=" mb-4">
                 {blog.shortDescription.length > 100
                   ? `${blog.shortDescription.slice(0, 100)}...`

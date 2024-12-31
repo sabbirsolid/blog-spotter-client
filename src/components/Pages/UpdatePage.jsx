@@ -2,7 +2,6 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-
 const UpdatePage = () => {
   const data = useLoaderData();
   const {
@@ -39,7 +38,7 @@ const UpdatePage = () => {
     e.preventDefault();
 
     // Send the updated blog data to the server
-    fetch(`http://localhost:5000/update/${_id}`, {
+    fetch(`https://blog-spotter-server.vercel.app/update/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

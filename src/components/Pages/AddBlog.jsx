@@ -30,17 +30,21 @@ const AddBlog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const completeFormData = { ...formData, authorEmail, postedTime };
-    console.log("Form Data Submitted:", completeFormData);
-    axios.post("http://localhost:5000/blogs", completeFormData,{withCredentials: 'include'}).then((res) => {
-      if (res.data.acknowledged) {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Your blog has added successfully",
-          showConfirmButton: true,
-        });
-      }
-    });
+    // console.log("Form Data Submitted:", completeFormData);
+    axios
+      .post("https://blog-spotter-server.vercel.app/blogs", completeFormData, {
+        withCredentials: "include",
+      })
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Your blog has added successfully",
+            showConfirmButton: true,
+          });
+        }
+      });
   };
 
   return (
@@ -49,15 +53,10 @@ const AddBlog = () => {
         onSubmit={handleSubmit}
         className=" shadow-md rounded-lg p-6 w-full max-w-lg space-y-4"
       >
-        <h2 className="text-2xl font-bold  text-center">
-          Add a Blog
-        </h2>
+        <h2 className="text-2xl font-bold  text-center">Add a Blog</h2>
 
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium "
-          >
+          <label htmlFor="title" className="block text-sm font-medium ">
             Title
           </label>
           <input
@@ -73,10 +72,7 @@ const AddBlog = () => {
         </div>
 
         <div>
-          <label
-            htmlFor="imageUrl"
-            className="block text-sm font-medium "
-          >
+          <label htmlFor="imageUrl" className="block text-sm font-medium ">
             Image URL
           </label>
           <input
@@ -92,10 +88,7 @@ const AddBlog = () => {
         </div>
 
         <div>
-          <label
-            htmlFor="category"
-            className="block text-sm font-medium "
-          >
+          <label htmlFor="category" className="block text-sm font-medium ">
             Category
           </label>
           <select

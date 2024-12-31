@@ -1,20 +1,18 @@
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 const PopularCategories = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/popular-categories")
+      .get("https://blog-spotter-server.vercel.app/popular-categories")
       .then((res) => {
         setCategories(res.data);
       })
       .catch((err) => {
-        console.error("Failed to fetch popular categories:", err);
+        // console.error("Failed to fetch popular categories:", err);
       });
   }, []);
 
@@ -25,7 +23,9 @@ const PopularCategories = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <h2 className="text-3xl font-semibold text-center mb-6">Popular Categories</h2>
+      <h2 className="text-3xl font-semibold text-center mb-6">
+        Popular Categories
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category, index) => (
           <motion.div

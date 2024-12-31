@@ -1,5 +1,5 @@
 import axios from "axios";
-import {  useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
@@ -11,7 +11,7 @@ const AllBlogs = () => {
   const [count, setCount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const categories = [
     "Technology",
@@ -26,14 +26,14 @@ const AllBlogs = () => {
 
   // Fetch total blog count for pagination
   useEffect(() => {
-    fetch("http://localhost:5000/blogsCount")
+    fetch("https://blog-spotter-server.vercel.app/blogsCount")
       .then((res) => res.json())
       .then((data) => setCount(data.count));
   }, []);
 
   // Fetch blogs based on pagination, category, and search query
   useEffect(() => {
-    const query = `http://localhost:5000/blogs?page=${currentPage}&size=${itemsPerPage}${
+    const query = `https://blog-spotter-server.vercel.app/blogs?page=${currentPage}&size=${itemsPerPage}${
       selectedCategory ? `&category=${selectedCategory}` : ""
     }${searchQuery ? `&search=${searchQuery}` : ""}`;
 
@@ -60,7 +60,7 @@ const AllBlogs = () => {
     e.preventDefault();
     setCurrentPage(0); // Reset to first page when performing a new search
   };
-// wishlist
+  // wishlist
   const handleWishList = (_id) => {
     const selectedBlog = blogs?.find((blog) => blog._id === _id);
 
@@ -76,24 +76,26 @@ const AllBlogs = () => {
     }
 
     const blogWithUser = { ...selectedBlog, email: user.email }; // Add email to the selected data
-    console.log(blogWithUser);
-    axios.post("http://localhost:5000/wishlist", blogWithUser).then((res) => {
-      if (res.data.acknowledged) {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Added to Wishlist successfully!",
-          showConfirmButton: true,
-        });
-      } else {
-        Swal.fire({
-          position: "top-center",
-          icon: "error",
-          title: "Failed to add to Wishlist.",
-          showConfirmButton: true,
-        });
-      }
-    });
+    // console.log(blogWithUser);
+    axios
+      .post("https://blog-spotter-server.vercel.app/wishlist", blogWithUser)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Added to Wishlist successfully!",
+            showConfirmButton: true,
+          });
+        } else {
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Failed to add to Wishlist.",
+            showConfirmButton: true,
+          });
+        }
+      });
   };
 
   return (
@@ -102,7 +104,10 @@ const AllBlogs = () => {
 
       <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
         {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex items-center w-full md:w-1/2">
+        <form
+          onSubmit={handleSearch}
+          className="flex items-center w-full md:w-1/2"
+        >
           <input
             type="text"
             placeholder="Search blogs by title"
@@ -136,7 +141,10 @@ const AllBlogs = () => {
       {/* Blogs Grid */}
       <div className="products-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {blogs?.map((blog) => (
-          <div key={blog._id} className="blog-card border rounded-lg p-4 shadow-md">
+          <div
+            key={blog._id}
+            className="blog-card border rounded-lg p-4 shadow-md"
+          >
             <img
               src={blog.imageUrl}
               alt={blog.title}
@@ -145,10 +153,19 @@ const AllBlogs = () => {
             <h2 className="text-xl font-semibold mt-2">{blog.title}</h2>
             <p className="text-gray-600 mt-1">{blog.shortDescription}</p>
             <div className="flex items-center justify-between mt-4">
-              <span className="text-sm font-medium text-gray-500">{blog.category}</span>
-              <Link to={`/blogs/${blog._id}`}><button  className="text-blue-500 hover:underline">Details</button></Link>
+              <span className="text-sm font-medium text-gray-500">
+                {blog.category}
+              </span>
+              <Link to={`/blogs/${blog._id}`}>
+                <button className="text-blue-500 hover:underline">
+                  Details
+                </button>
+              </Link>
             </div>
-            <button onClick={() => handleWishList(blog._id)} className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+            <button
+              onClick={() => handleWishList(blog._id)}
+              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
               Add to Wishlist
             </button>
           </div>
@@ -201,4 +218,3 @@ const AllBlogs = () => {
 };
 
 export default AllBlogs;
-

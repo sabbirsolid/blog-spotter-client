@@ -65,8 +65,9 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     // loader: ({ params }) =>
-    //   fetch(`http://localhost:5000/update/${params.id}`),
-    loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`,),
+    //   fetch(`https://blog-spotter-server.vercel.app/update/${params.id}`),
+    loader: ({ params }) =>
+      fetch(`https://blog-spotter-server.vercel.app/update/${params.id}`),
   },
   {
     path: "/blogs/:id",
@@ -75,9 +76,10 @@ const router = createBrowserRouter([
         <BlogDetails></BlogDetails>,
       </PrivateRoute>
     ),
-    loader: ({ params }) => fetch(`http://localhost:5000/blogs/${params.id}`,{
-      credentials: 'include'
-    }),
+    loader: ({ params }) =>
+      fetch(`https://blog-spotter-server.vercel.app/blogs/${params.id}`, {
+        credentials: "include",
+      }),
   },
 
   {

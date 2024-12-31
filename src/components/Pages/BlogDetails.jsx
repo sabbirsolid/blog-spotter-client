@@ -24,10 +24,10 @@ const BlogDetails = () => {
 
   // Fetch comments for the blog
   useEffect(() => {
-    fetch(`http://localhost:5000/comments/${_id}`)
+    fetch(`https://blog-spotter-server.vercel.app/comments/${_id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched comments:", data);
+        // console.log("Fetched comments:", data);
         setComments(data);
       });
   }, [_id]);
@@ -59,7 +59,7 @@ const BlogDetails = () => {
     };
 
     // Add the new comment (send to server)
-    fetch("http://localhost:5000/comments", {
+    fetch("https://blog-spotter-server.vercel.app/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const BlogDetails = () => {
         }
       })
       .catch((error) => {
-        console.error("Error adding comment:", error);
+        // console.error("Error adding comment:", error);
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -117,12 +117,9 @@ const BlogDetails = () => {
 
           {!isOwner ? null : (
             <Link to={`/update/${_id}`}>
-            <button
-              
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            >
-              Update Blog
-            </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Update Blog
+              </button>
             </Link>
           )}
         </div>

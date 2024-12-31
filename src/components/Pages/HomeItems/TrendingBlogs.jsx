@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -10,12 +8,12 @@ const TrendingBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/trending-topics")
+      .get("https://blog-spotter-server.vercel.app/trending-topics")
       .then((res) => {
         setTrendingBlogs(res.data);
       })
       .catch((err) => {
-        console.error("Error fetching trending topics:", err);
+        // console.error("Error fetching trending topics:", err);
       });
   }, []);
 
@@ -26,7 +24,9 @@ const TrendingBlogs = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <h2 className="text-3xl font-semibold text-center mb-6">Trending Topics</h2>
+      <h2 className="text-3xl font-semibold text-center mb-6">
+        Trending Topics
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {trendingBlogs.map((blog) => (
           <motion.div
@@ -43,7 +43,9 @@ const TrendingBlogs = () => {
             />
             <div className="mt-4">
               <h3 className="text-xl font-bold">{blog.title}</h3>
-              <p className="text-sm my-2">{blog.category} | {blog.commentCount} Comments</p>
+              <p className="text-sm my-2">
+                {blog.category} | {blog.commentCount} Comments
+              </p>
               <p className="text-sm">
                 {blog.shortDescription.length > 80
                   ? `${blog.shortDescription.slice(0, 80)}...`
@@ -51,7 +53,10 @@ const TrendingBlogs = () => {
               </p>
             </div>
             <div className="mt-4 flex justify-between items-center">
-              <Link to={`/blogs/${blog._id}`} className="text-blue-600 font-semibold hover:underline">
+              <Link
+                to={`/blogs/${blog._id}`}
+                className="text-blue-600 font-semibold hover:underline"
+              >
                 Read More
               </Link>
               <span className="text-sm">{blog.commentCount} Comments</span>

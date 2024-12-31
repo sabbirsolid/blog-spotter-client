@@ -26,7 +26,7 @@ const Navbar = () => {
       >Add Blog
       </NavLink>
 
-      {user && (
+      
         <NavLink
           to="/all-blogs"
           className={({ isActive }) =>
@@ -36,7 +36,6 @@ const Navbar = () => {
           }
         > All Blogs
         </NavLink>
-      )}
       <NavLink
         to="/featured-blogs"
         className={({ isActive }) =>
@@ -137,9 +136,7 @@ const Navbar = () => {
         {user ? (
           <>
             <div className="flex items-center space-x-1">
-              <p className=" hidden lg:block font-medium">
-                {user?.email}
-              </p>
+             
 
               {user.photoURL && (
                 <Link to="/private/my-profile">

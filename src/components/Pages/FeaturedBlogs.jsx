@@ -11,8 +11,8 @@ const FeaturedBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/featured", {
-        withCredentials: 'include'
+      .get("https://blog-spotter-server.vercel.app/featured", {
+        withCredentials: "include",
       })
       .then((res) => setFeatured(res.data))
       .catch((error) => console.error("Error fetching featured blogs:", error));
@@ -34,24 +34,26 @@ const FeaturedBlogs = () => {
     }
 
     const blogWithUser = { ...selectedBlog, email: user.email }; // Add email to the selected data
-    console.log(blogWithUser);
-    axios.post("http://localhost:5000/wishlist", blogWithUser).then((res) => {
-      if (res.data.acknowledged) {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Added to Wishlist successfully!",
-          showConfirmButton: true,
-        });
-      } else {
-        Swal.fire({
-          position: "top-center",
-          icon: "error",
-          title: "Failed to add to Wishlist.",
-          showConfirmButton: true,
-        });
-      }
-    });
+    // console.log(blogWithUser);
+    axios
+      .post("https://blog-spotter-server.vercel.app/wishlist", blogWithUser)
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Added to Wishlist successfully!",
+            showConfirmButton: true,
+          });
+        } else {
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Failed to add to Wishlist.",
+            showConfirmButton: true,
+          });
+        }
+      });
   };
 
   // Columns definition for the DataTable
@@ -70,13 +72,19 @@ const FeaturedBlogs = () => {
       name: "Category",
       selector: (row) => row.category,
       sortable: true,
-      cell: (row) => <span className="text-sm text-gray-500">{row.category}</span>,
+      cell: (row) => (
+        <span className="text-sm text-gray-500">{row.category}</span>
+      ),
     },
     {
       name: "Posted Date",
       selector: (row) => new Date(row.postedTime).toLocaleDateString(),
       sortable: true,
-      cell: (row) => <span className="text-sm text-gray-400">{new Date(row.postedTime).toLocaleDateString()}</span>,
+      cell: (row) => (
+        <span className="text-sm text-gray-400">
+          {new Date(row.postedTime).toLocaleDateString()}
+        </span>
+      ),
     },
     {
       name: "Actions",
