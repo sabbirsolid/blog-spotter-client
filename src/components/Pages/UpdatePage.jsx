@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const UpdatePage = () => {
   const data = useLoaderData();
@@ -60,6 +61,9 @@ const UpdatePage = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+      <Helmet>
+        <title>Update Blog | BlogSpotter</title>
+      </Helmet>
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-6 w-full max-w-lg space-y-4"

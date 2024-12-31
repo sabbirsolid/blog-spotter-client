@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../Providers/AuthProvider";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import { Helmet } from "react-helmet-async";
 
 const FeaturedBlogs = () => {
   const [featured, setFeatured] = useState([]);
@@ -109,6 +110,9 @@ const FeaturedBlogs = () => {
 
   return (
     <div className="container mx-auto my-10 px-6">
+      <Helmet>
+        <title>Featured Blogs | BlogSpotter</title>
+      </Helmet>
       <h1 className="text-3xl text-center font-bold  mb-6">Featured Blogs</h1>
       <DataTable
         columns={columns}

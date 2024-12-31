@@ -1,11 +1,10 @@
-
-
 import { motion } from "framer-motion";
 import Banner from "./HomeItems/Banner";
 import Newsletter from "./HomeItems/Newsletter";
 import PopularCategories from "./HomeItems/PopularCategories";
 import RecentBlogs from "./HomeItems/RecentBlogs";
 import TrendingBlogs from "./HomeItems/TrendingBlogs";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   return (
@@ -15,6 +14,9 @@ const Home = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
+      <Helmet>
+        <title>Home | BlogSpotter</title>
+      </Helmet>
       <Banner />
       <motion.div
         initial={{ y: 20, opacity: 0 }}

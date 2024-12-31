@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../Axios/useAxiosSecure";
 import { AuthContext } from "../Providers/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const WishList = () => {
   const [data, setData] = useState([]);
@@ -107,6 +108,9 @@ const WishList = () => {
 
   return (
     <div className="container mx-auto my-10 px-6">
+      <Helmet>
+              <title>WishList | BlogSpotter</title>
+            </Helmet>
       <h1 className="text-3xl text-center font-bold mb-6">Your Wishlist</h1>
       <DataTable
         columns={columns}

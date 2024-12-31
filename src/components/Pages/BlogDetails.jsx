@@ -3,6 +3,7 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../Axios/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const BlogDetails = () => {
   const data = useLoaderData();
@@ -93,16 +94,13 @@ const BlogDetails = () => {
       });
   };
 
-  // Handle the update button click (only show if the current user is the blog owner)
-  // const handleUpdateClick = () => {
-  //   navigate(`/blogs/${_id}`);
-  // };
-
-  // Disable commenting if the current user is the blog owner
   const isOwner = user?.email === authorEmail;
 
   return (
     <div className="blog-details p-4 max-w-7xl mx-auto">
+      <Helmet>
+              <title>Blog Details | BlogSpotter</title>
+            </Helmet>
       <h1 className="text-3xl font-bold mb-6">{title}</h1>
       <div className="flex flex-col md:flex-row gap-8 mb-8">
         <img

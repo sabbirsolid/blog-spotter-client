@@ -92,7 +92,7 @@ const Register = () => {
   return (
     <div className="min-h-screen m-3 flex items-center justify-center bg-gradient-to-r">
       <Helmet>
-        <title>Sign Up | ChillGamers</title>
+        <title>Register | BlogSpotter</title>
       </Helmet>
       <div className="border rounded-xl p-8 shadow-lg w-full max-w-sm">
         <h2 className="text-3xl font-semibold  mb-6 text-center">Sign Up</h2>

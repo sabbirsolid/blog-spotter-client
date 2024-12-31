@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex m-3 items-center justify-center bg-gradient-to-r">
       <Helmet>
-        <title>Login | ChillGamers</title>
+        <title>Login | BlogSpotter</title>
       </Helmet>
       <div className=" p-8 border rounded-xl shadow-lg w-full max-w-sm">
         <h2 className="text-3xl font-semibold  mb-6 text-center">Login</h2>

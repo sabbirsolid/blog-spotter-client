@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -100,6 +101,9 @@ const AllBlogs = () => {
 
   return (
     <div className="shop-container p-4">
+      <Helmet>
+        <title>All Blogs | BlogSpotter</title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center mb-6">All Blogs</h1>
 
       <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
@@ -174,7 +178,6 @@ const AllBlogs = () => {
 
       {/* Pagination */}
       <div className="pagination flex flex-col items-center mt-6">
-        <p>Current page: {currentPage + 1}</p>
         <div className="flex gap-2">
           <button
             onClick={handlePrevPage}

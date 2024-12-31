@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../Providers/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const AddBlog = () => {
   const [formData, setFormData] = useState({
@@ -49,6 +50,9 @@ const AddBlog = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen  px-4">
+      <Helmet>
+        <title>Add Blog | BlogSpotter</title>
+      </Helmet>
       <form
         onSubmit={handleSubmit}
         className=" shadow-md rounded-lg p-6 w-full max-w-lg space-y-4"
