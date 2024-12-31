@@ -1,8 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const RecentBlogs = () => {
   const [recent, setRecent] = useState([]);
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -15,9 +19,38 @@ const RecentBlogs = () => {
       });
   }, []);
 
-  const handleWishlist = (blog) => {
-    console.log(`Added to wishlist: ${blog.title}`);
-    // You can implement wishlist functionality here
+  const handleWishList = (_id) => {
+    const selectedBlog = recent?.find((blog) => blog._id === _id);
+
+    if (!user?.email) {
+      Swal.fire({
+        position: "top-center",
+        icon: "warning",
+        title: "Please log in to add items to your wishlist!",
+        showConfirmButton: true,
+      });
+      return;
+    }
+
+    const blogWithUser = { ...selectedBlog, email: user.email };
+    console.log(blogWithUser);
+    axios.post("http://localhost:5000/wishlist", blogWithUser).then((res) => {
+      if (res.data.acknowledged) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Added to Wishlist successfully!",
+          showConfirmButton: true,
+        });
+      } else {
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Failed to add to Wishlist.",
+          showConfirmButton: true,
+        });
+      }
+    });
   };
 
   return (
@@ -41,17 +74,17 @@ const RecentBlogs = () => {
               </p>
               <div className="flex justify-between items-center">
                 <button
-                  onClick={() => handleWishlist(blog)}
+                  onClick={() => handleWishList(blog._id)}
                   className="bg-gray-800 text-white px-4 py-2 text-sm rounded hover:bg-gray-700"
                 >
                   Add to Wishlist
                 </button>
-                <a
-                  href={`/blogs/${blog._id}`}
+                <Link
+                  to={`/blogs/${blog._id}`}
                   className="text-blue-500 text-sm hover:underline"
                 >
                   View Details
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -59,7 +59,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-white shadow-lg lg:px-6">
+    <div className="navbar  shadow-lg lg:px-6">
       {/* Navbar Start */}
       <div className="navbar-start">
         <div className="dropdown">
@@ -86,7 +86,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-white rounded-lg shadow-lg mt-3 w-52 space-y-2 p-2 z-10"
+            className="menu menu-sm dropdown-content  rounded-lg shadow-lg mt-3 w-52 space-y-2 p-2 z-10"
           >
             {links}
           </ul>
@@ -104,7 +104,7 @@ const Navbar = () => {
       {/* Navbar Center */}
       <div className="navbar-start lg:hidden">
         {user ? (
-          <p className="text-gray-700 text-sm">
+          <p className=" text-sm">
             Welcome,{" "}
             <span className="font-semibold text-indigo-600">
               {user.displayName}
@@ -117,7 +117,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex lg:flex-col justify-center">
         {user ? (
-          <p className="text-gray-700 text-lg font-medium">
+          <p className=" text-lg font-medium">
             Welcome,{" "}
             <span className="font-semibold text-indigo-600">
               {user.displayName}
@@ -127,7 +127,7 @@ const Navbar = () => {
         ) : (
           ""
         )}
-        <ul className="menu menu-horizontal space-x-6 text-gray-700">
+        <ul className="menu menu-horizontal space-x-6 ">
           {links}
         </ul>
       </div>
@@ -137,7 +137,7 @@ const Navbar = () => {
         {user ? (
           <>
             <div className="flex items-center space-x-1">
-              <p className="text-gray-700 hidden lg:block font-medium">
+              <p className=" hidden lg:block font-medium">
                 {user?.email}
               </p>
 
@@ -153,7 +153,7 @@ const Navbar = () => {
             </div>
             <button
               onClick={logOut}
-              className="px-2 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
+              className="px-2 py-2  font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
             >
               Logout
             </button>
@@ -162,13 +162,13 @@ const Navbar = () => {
           <div className="space-x-3">
             <Link
               to="/login"
-              className="px-2 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
+              className="px-2 py-2  font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
             >
               Login
             </Link>
             <Link
               to="/register"
-              className="px-2 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
+              className="px-2 py-2 font-medium rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md transition-all"
             >
               Register
             </Link>

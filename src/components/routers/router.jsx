@@ -38,12 +38,6 @@ const router = createBrowserRouter([
         path: "/featured-blogs",
         element: <FeaturedBlogs></FeaturedBlogs>,
       },
-      {
-        path: "/blogs/:id",
-        element: <BlogDetails></BlogDetails>,
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/blogs/${params.id}`),
-      },
     ],
   },
   {
@@ -62,7 +56,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
   },
-  
+
   {
     path: "/update/:id",
     element: (
@@ -72,11 +66,18 @@ const router = createBrowserRouter([
     ),
     // loader: ({ params }) =>
     //   fetch(`http://localhost:5000/update/${params.id}`),
-    loader: ({ params }) =>
-      fetch(`http://localhost:5000/update/${params.id}`),
-    
+    loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`),
   },
-    
+  {
+    path: "/blogs/:id",
+    element: (
+      <PrivateRoute>
+        <BlogDetails></BlogDetails>,
+      </PrivateRoute>
+    ),
+    loader: ({ params }) => fetch(`http://localhost:5000/blogs/${params.id}`),
+  },
+
   {
     path: "*",
     element: <Error></Error>,
