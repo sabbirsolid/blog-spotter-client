@@ -11,7 +11,7 @@ const RecentBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/recent-blogs")
+      .get("https://blog-spotter-server.vercel.app/recent-blogs")
       .then((res) => setRecent(res.data));
   }, []);
 
@@ -34,32 +34,35 @@ const RecentBlogs = () => {
       title,
     };
 
-    axios.post("http://localhost:5000/wishlist", newWish).then((res) => {
-      if (res.status === 200 && res.data.acknowledged) {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Added to Wishlist successfully!",
-          showConfirmButton: true,
-        });
-      }
-    }).catch((err) => {
-      if (err.response && err.response.status === 409) {
-        Swal.fire({
-          position: "top-center",
-          icon: "info",
-          title: "This blog is already in your wishlist!",
-          showConfirmButton: true,
-        });
-      } else {
-        Swal.fire({
-          position: "top-center",
-          icon: "error",
-          title: "Failed to add to Wishlist.",
-          showConfirmButton: true,
-        });
-      }
-    });
+    axios
+      .post("https://blog-spotter-server.vercel.app/wishlist", newWish)
+      .then((res) => {
+        if (res.status === 200 && res.data.acknowledged) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Added to Wishlist successfully!",
+            showConfirmButton: true,
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 409) {
+          Swal.fire({
+            position: "top-center",
+            icon: "info",
+            title: "This blog is already in your wishlist!",
+            showConfirmButton: true,
+          });
+        } else {
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Failed to add to Wishlist.",
+            showConfirmButton: true,
+          });
+        }
+      });
   };
 
   return (
@@ -101,7 +104,9 @@ const RecentBlogs = () => {
               </div>
               <div className="flex justify-between items-center mt-4">
                 <button
-                  onClick={() => handleWishList(blog._id, blog.category, blog.title)}
+                  onClick={() =>
+                    handleWishList(blog._id, blog.category, blog.title)
+                  }
                   className="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition duration-300"
                 >
                   Wishlist

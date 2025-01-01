@@ -40,7 +40,7 @@ const UpdatePage = () => {
     e.preventDefault();
 
     axios
-      .patch(`http://localhost:5000/update/${_id}`, formData, {
+      .patch(`https://blog-spotter-server.vercel.app/update/${_id}`, formData, {
         withCredentials: "include",
       })
       .then((res) => {
@@ -71,15 +71,10 @@ const UpdatePage = () => {
         onSubmit={handleSubmit}
         className=" shadow-lg rounded-xl p-8 w-full max-w-lg space-y-6 border border-gray-200"
       >
-        <h2 className="text-3xl font-semibold  text-center">
-          Update Blog
-        </h2>
+        <h2 className="text-3xl font-semibold  text-center">Update Blog</h2>
 
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium  mb-1"
-          >
+          <label htmlFor="title" className="block text-sm font-medium  mb-1">
             Title
           </label>
           <input
@@ -95,10 +90,7 @@ const UpdatePage = () => {
         </div>
 
         <div>
-          <label
-            htmlFor="imageUrl"
-            className="block text-sm font-medium  mb-1"
-          >
+          <label htmlFor="imageUrl" className="block text-sm font-medium  mb-1">
             Image URL
           </label>
           <input
@@ -114,10 +106,7 @@ const UpdatePage = () => {
         </div>
 
         <div>
-          <label
-            htmlFor="category"
-            className="block text-sm font-medium  mb-1"
-          >
+          <label htmlFor="category" className="block text-sm font-medium  mb-1">
             Category
           </label>
           <select

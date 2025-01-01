@@ -12,10 +12,18 @@ const AddBlog = () => {
     shortDescription: "",
     longDescription: "",
   });
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const authorEmail = user.email;
   const postedTime = new Date().toISOString();
   const axiosSecure = useAxiosSecure();
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loading loading-spinner text-info text-5xl"></div>
+      </div>
+    );
+  }
 
   const categories = ["Technology", "Health", "Lifestyle", "Education", "Travel"];
 

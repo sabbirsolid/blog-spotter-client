@@ -64,25 +64,34 @@ const router = createBrowserRouter([
         <UpdatePage />
       </PrivateRoute>
     ),
-    // loader: ({ params }) =>
-    //   fetch(`http://localhost:5000/update/${params.id}`),
-    loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`,{
-      credentials: 'include'
-    }),
+    loader: ({ params }) =>
+      fetch(`https://blog-spotter-server.vercel.app/update/${params.id}`, {
+        credentials: "include",
+      }),
   },
   {
     path: "/blogs/:id",
     element: (
       <PrivateRoute>
-        <BlogDetails></BlogDetails>
+        <BlogDetails />
       </PrivateRoute>
     ),
-    loader: ({ params }) =>
-      fetch(`http://localhost:5000/blogs/${params.id}`, {
-        credentials: "include"
-      }),
-  },
+    loader: async ({ params }) => {
+      const response = await fetch(
+        `https://blog-spotter-server.vercel.app/blogs/${params.id}`,
+        {
+          credentials: "include",
+        }
+      );
 
+      if (!response.ok) {
+        console.error("Failed to fetch blog data");
+        return {}; // Return fallback data if necessary
+      }
+
+      return await response.json();
+    },
+  },
   {
     path: "*",
     element: <Error></Error>,

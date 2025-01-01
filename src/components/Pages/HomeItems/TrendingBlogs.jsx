@@ -8,7 +8,7 @@ const TrendingBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/trending-topics")
+      .get("https://blog-spotter-server.vercel.app/trending-topics")
       .then((res) => {
         setTrendingBlogs(res.data);
       })

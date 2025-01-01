@@ -2,29 +2,33 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../Axios/useAxiosSecure";
 import { AuthContext } from "../Providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import DataTable from "react-data-table-component";
 
 const FeaturedBlogs = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const { user } = useContext(AuthContext);
-  const axiosSecure = useAxiosSecure();
 
   // Fetch Featured Blogs Data
   useEffect(() => {
     const fetchFeaturedBlogs = async () => {
+      setLoading(true); // Start loading
       try {
-        const response = await axiosSecure.get(`/featured`);
+        const response = await axios.get(
+          "https://blog-spotter-server.vercel.app/featured"
+        );
         setData(response.data);
       } catch (error) {
         console.error("Error fetching featured blogs:", error);
+      } finally {
+        setLoading(false); // End loading
       }
     };
 
     fetchFeaturedBlogs();
-  }, [axiosSecure]);
+  }, []);
 
   // Handle Add to Wishlist
   const handleWishList = (_id, category, title) => {
@@ -47,7 +51,7 @@ const FeaturedBlogs = () => {
     };
 
     axios
-      .post("http://localhost:5000/wishlist", newWish)
+      .post("https://blog-spotter-server.vercel.app/wishlist", newWish)
       .then((res) => {
         if (res.status === 200 && res.data.acknowledged) {
           Swal.fire({
@@ -100,13 +104,13 @@ const FeaturedBlogs = () => {
         <div className="flex space-x-2">
           <Link
             to={`/blogs/${row._id}`}
-            className="px-2 py-1 text-sm bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+            className="px-1 py-1 text-sm bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
           >
             Details
           </Link>
           <button
             onClick={() => handleWishList(row._id, row.category, row.title)}
-            className="px-2 py-1 text-sm bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300"
+            className="px-1 py-1 text-sm bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300"
           >
             Wishlist
           </button>
@@ -115,8 +119,16 @@ const FeaturedBlogs = () => {
     },
   ];
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loading loading-spinner text-info text-5xl"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto my-10 px-4">
+    <div className="container mx-auto my-10 px-2">
       <Helmet>
         <title>Featured Blogs | BlogSpotter</title>
       </Helmet>
@@ -141,7 +153,6 @@ const FeaturedBlogs = () => {
                 },
               },
             },
-            
           }}
         />
       </div>

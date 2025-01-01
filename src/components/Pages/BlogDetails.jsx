@@ -1,15 +1,14 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../Axios/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 
 const BlogDetails = () => {
   const data = useLoaderData();
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  // const axiosSecure = useAxiosSecure();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
 
@@ -21,18 +20,32 @@ const BlogDetails = () => {
     longDescription,
     _id,
     authorEmail,
-  } = data[0];
+  } = data[0] || {}; 
 
-  //Fetch comments for the blog
+  // Fetch comments for the blog
   useEffect(() => {
-    fetch(`http://localhost:5000/comments/${_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log("Fetched comments:", data);
-        setComments(data);
-      });
+    if (_id) {
+      setLoading(true); // Set loading true while fetching comments
+      fetch(`https://blog-spotter-server.vercel.app/comments/${_id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setComments(data);
+          setLoading(false); // Set loading false once comments are fetched
+        })
+        .catch((error) => {
+          console.error("Error fetching comments:", error);
+          setLoading(false); // Handle errors by stopping the loading state
+        });
+    }
   }, [_id]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loading loading-spinner text-info text-5xl"></div>
+      </div>
+    );
+  }
 
   // Handle comment submission
   const handleCommentSubmit = (e) => {
@@ -55,7 +68,7 @@ const BlogDetails = () => {
     };
 
     // Add the new comment (send to server)
-    fetch("http://localhost:5000/comments", {
+    fetch("https://blog-spotter-server.vercel.app/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +93,6 @@ const BlogDetails = () => {
         }
       })
       .catch((error) => {
-        // console.error("Error adding comment:", error);
         Swal.fire({
           icon: "error",
           title: "Error",

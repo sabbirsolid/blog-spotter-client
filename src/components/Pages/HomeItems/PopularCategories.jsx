@@ -7,7 +7,7 @@ const PopularCategories = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/popular-categories")
+      .get("https://blog-spotter-server.vercel.app/popular-categories")
       .then((res) => {
         setCategories(res.data);
       })

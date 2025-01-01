@@ -40,16 +40,20 @@ const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         const user = { email: currentUser.email };
         axios
-          .post("http://localhost:5000/jwt", user, {
+          .post("https://blog-spotter-server.vercel.app/jwt", user, {
             withCredentials: true,
           })
           .then((res) => {
-            console.log("login", res.data);
+            // console.log("login", res.data);
             setLoading(false);
           });
       } else {
         axios
-          .post("http://localhost:5000/logout",{}, { withCredentials: true })
+          .post(
+            "https://blog-spotter-server.vercel.app/logout",
+            {},
+            { withCredentials: true }
+          )
           .then((res) => {
             // console.log("logout", res.data);
             setLoading(false);
@@ -60,6 +64,7 @@ const AuthProvider = ({ children }) => {
       unSubscribe();
     };
   }, []);
+
   const userInfo = {
     createUserWithEmail,
     user,
