@@ -97,8 +97,8 @@ const Navbar = () => {
             to="/"
             className="text-3xl font-bold hidden lg:block tracking-wide"
           >
-            <span className="text-blue-400">Blog</span>
-            <span className="text-indigo-400">Spotter</span>
+            <span className="text-blue-200">Blog</span>
+            <span className="text-indigo-300">Spotter</span>
           </Link>
         </div>
 
@@ -111,7 +111,7 @@ const Navbar = () => {
             <>
               <div className="flex items-center space-x-2">
                 {user.photoURL && (
-                  <Link to="/private/my-profile">
+                  <Link>
                     <img
                       src={user.photoURL}
                       alt="Profile"

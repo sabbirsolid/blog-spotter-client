@@ -36,6 +36,10 @@ const Register = () => {
       setError("Password must be at least 6 characters long.");
       return;
     }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      setError("Password must contain at least one special character.");
+      return;
+    }
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
