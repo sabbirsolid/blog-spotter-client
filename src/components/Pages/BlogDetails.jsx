@@ -9,7 +9,7 @@ const BlogDetails = () => {
   const data = useLoaderData();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  // const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
 
@@ -23,9 +23,9 @@ const BlogDetails = () => {
     authorEmail,
   } = data[0];
 
-  // Fetch comments for the blog
+  //Fetch comments for the blog
   useEffect(() => {
-    fetch(`https://blog-spotter-server.vercel.app/comments/${_id}`)
+    fetch(`http://localhost:5000/comments/${_id}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log("Fetched comments:", data);
@@ -33,11 +33,6 @@ const BlogDetails = () => {
       });
   }, [_id]);
 
-  // useEffect(() => {
-  //   axiosSecure
-  //   .get(`/comments?email=${user.email}`)
-  //   .then((res) => setComments(res.data))
-  // },[_id]);
 
   // Handle comment submission
   const handleCommentSubmit = (e) => {
@@ -60,7 +55,7 @@ const BlogDetails = () => {
     };
 
     // Add the new comment (send to server)
-    fetch("https://blog-spotter-server.vercel.app/comments", {
+    fetch("http://localhost:5000/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,8 +94,8 @@ const BlogDetails = () => {
   return (
     <div className="blog-details p-4 max-w-7xl mx-auto">
       <Helmet>
-              <title>Blog Details | BlogSpotter</title>
-            </Helmet>
+        <title>Blog Details | BlogSpotter</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6">{title}</h1>
       <div className="flex flex-col md:flex-row gap-8 mb-8">
         <img

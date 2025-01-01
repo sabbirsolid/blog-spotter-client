@@ -11,13 +11,11 @@ const RecentBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("https://blog-spotter-server.vercel.app/recent-blogs")
+      .get("http://localhost:5000/recent-blogs")
       .then((res) => setRecent(res.data));
   }, []);
 
-  const handleWishList = (_id) => {
-    const selectedBlog = recent.find((blog) => blog._id === _id);
-
+  const handleWishList = (_id, category, title) => {
     if (!user?.email) {
       Swal.fire({
         position: "top-center",
@@ -28,28 +26,41 @@ const RecentBlogs = () => {
       return;
     }
 
-    const blogWithUser = { ...selectedBlog, email: user.email };
-    axios
-      .post("https://blog-spotter-server.vercel.app/wishlist", blogWithUser)
-      .then((res) => {
-        if (res.data.acknowledged) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Added to Wishlist successfully!",
-            showConfirmButton: true,
-          });
-        } else {
-          Swal.fire({
-            position: "top-center",
-            icon: "error",
-            title: "Failed to add to Wishlist.",
-            showConfirmButton: true,
-          });
-        }
-      });
-  };
+    const newWish = {
+      blogId: _id,
+      userName: user.displayName,
+      userEmail: user.email,
+      category,
+      title,
+    };
 
+    axios.post("http://localhost:5000/wishlist", newWish).then((res) => {
+      if (res.status === 200 && res.data.acknowledged) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Added to Wishlist successfully!",
+          showConfirmButton: true,
+        });
+      }
+    }).catch((err) => {
+      if (err.response && err.response.status === 409) {
+        Swal.fire({
+          position: "top-center",
+          icon: "info",
+          title: "This blog is already in your wishlist!",
+          showConfirmButton: true,
+        });
+      } else {
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Failed to add to Wishlist.",
+          showConfirmButton: true,
+        });
+      }
+    });
+};
   return (
     <div className="max-w-screen-xl mx-auto py-8 px-4">
       <motion.h2
@@ -84,7 +95,7 @@ const RecentBlogs = () => {
               </p>
               <div className="flex justify-between items-center">
                 <button
-                  onClick={() => handleWishList(blog._id)}
+                  onClick={() => handleWishList(blog._id,blog.category, blog.title)}
                   className="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition duration-300"
                 >
                   Wishlist

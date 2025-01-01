@@ -14,6 +14,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const [wishList, setWishList] = useState([]);
   const provider = new GoogleAuthProvider();
 
   // create user with email password
@@ -39,20 +40,16 @@ const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         const user = { email: currentUser.email };
         axios
-          .post("https://blog-spotter-server.vercel.app/jwt", user, {
+          .post("http://localhost:5000/jwt", user, {
             withCredentials: true,
           })
           .then((res) => {
-            // console.log("login", res.data);
+            console.log("login", res.data);
             setLoading(false);
           });
       } else {
         axios
-          .post(
-            "https://blog-spotter-server.vercel.app/logout",
-            {},
-            { withCredentials: true }
-          )
+          .post("http://localhost:5000/logout",{}, { withCredentials: true })
           .then((res) => {
             // console.log("logout", res.data);
             setLoading(false);

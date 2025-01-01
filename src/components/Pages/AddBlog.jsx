@@ -3,6 +3,7 @@ import { AuthContext } from "../Providers/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../Axios/useAxiosSecure";
 
 const AddBlog = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const AddBlog = () => {
   const { user } = useContext(AuthContext);
   const authorEmail = user.email;
   const postedTime = new Date().toISOString();
+  const axiosSecure = useAxiosSecure()
   const categories = [
     "Technology",
     "Health",
@@ -32,20 +34,34 @@ const AddBlog = () => {
     e.preventDefault();
     const completeFormData = { ...formData, authorEmail, postedTime };
     // console.log("Form Data Submitted:", completeFormData);
-    axios
-      .post("https://blog-spotter-server.vercel.app/blogs", completeFormData, {
-        withCredentials: "include",
-      })
-      .then((res) => {
-        if (res.data.acknowledged) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Your blog has added successfully",
-            showConfirmButton: true,
-          });
-        }
-      });
+    // axios
+    //   .post("http://localhost:5000/blogs", completeFormData, {
+    //     withCredentials: "include",
+    //   })
+    //   .then((res) => {
+    //     if (res.data.acknowledged) {
+    //       Swal.fire({
+    //         position: "top-center",
+    //         icon: "success",
+    //         title: "Your blog has added successfully",
+    //         showConfirmButton: true,
+    //       });
+    //     }
+    //   });
+    axiosSecure
+    .post("/blogs", completeFormData, {
+      withCredentials: "include",
+    })
+    .then((res) => {
+      if (res.data.acknowledged) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Your blog has added successfully",
+          showConfirmButton: true,
+        });
+      }
+    });
   };
 
   return (

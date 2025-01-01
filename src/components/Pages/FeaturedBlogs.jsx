@@ -8,23 +8,19 @@ import { Helmet } from "react-helmet-async";
 
 const FeaturedBlogs = () => {
   const [featured, setFeatured] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user} = useContext(AuthContext);
 
   useEffect(() => {
     axios
-      .get("https://blog-spotter-server.vercel.app/featured", {
+      .get("http://localhost:5000/featured", {
         withCredentials: "include",
       })
       .then((res) => setFeatured(res.data))
       .catch((error) => console.error("Error fetching featured blogs:", error));
   }, []);
-
   // Wishlist functionality
-  const handleWishList = (_id) => {
-    const selectedBlog = featured?.find((blog) => blog._id === _id);
-
+  const handleWishList = (_id, category, title) => {
     if (!user?.email) {
-      // If the user is not logged in, show a warning message
       Swal.fire({
         position: "top-center",
         icon: "warning",
@@ -34,28 +30,41 @@ const FeaturedBlogs = () => {
       return;
     }
 
-    const blogWithUser = { ...selectedBlog, email: user.email }; // Add email to the selected data
-    // console.log(blogWithUser);
-    axios
-      .post("https://blog-spotter-server.vercel.app/wishlist", blogWithUser)
-      .then((res) => {
-        if (res.data.acknowledged) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Added to Wishlist successfully!",
-            showConfirmButton: true,
-          });
-        } else {
-          Swal.fire({
-            position: "top-center",
-            icon: "error",
-            title: "Failed to add to Wishlist.",
-            showConfirmButton: true,
-          });
-        }
-      });
-  };
+    const newWish = {
+      blogId: _id,
+      userName: user.displayName,
+      userEmail: user.email,
+      category,
+      title,
+    };
+
+    axios.post("http://localhost:5000/wishlist", newWish).then((res) => {
+      if (res.status === 200 && res.data.acknowledged) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Added to Wishlist successfully!",
+          showConfirmButton: true,
+        });
+      }
+    }).catch((err) => {
+      if (err.response && err.response.status === 409) {
+        Swal.fire({
+          position: "top-center",
+          icon: "info",
+          title: "This blog is already in your wishlist!",
+          showConfirmButton: true,
+        });
+      } else {
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Failed to add to Wishlist.",
+          showConfirmButton: true,
+        });
+      }
+    });
+};
 
   // Columns definition for the DataTable
   const columns = [
@@ -98,7 +107,7 @@ const FeaturedBlogs = () => {
             Details
           </Link>
           <button
-            onClick={() => handleWishList(row._id)}
+            onClick={() => handleWishList(row._id, row.category,row.title)}
             className="px-4 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300"
           >
             Wishlist

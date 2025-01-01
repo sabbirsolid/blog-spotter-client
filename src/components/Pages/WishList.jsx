@@ -27,33 +27,32 @@ const WishList = () => {
     }
   }, [user?.email, axiosSecure]);
 
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/wishlist/?email=${user.email}`,{
+  //     withCredentials: true
+  //   })
+  //   .then(res => setData(res.data))
+  // },[user?.email])
+
   const handleRemove = async (itemId) => {
-    try {
-      const response = await axios.delete(
-        `https://blog-spotter-server.vercel.app/wishlist/${itemId}`
-      );
-      if (response.status === 200) {
-        // Filter out the deleted item from the local state
-        setData((prevData) => prevData.filter((item) => item._id !== itemId));
+    console.log(itemId);
+    axios.delete(`http://localhost:5000/wishlist/${itemId}`,{
+      withCredentials: true
+    }).then((res) => {
+      console.log(res.data);
+      if (res.data.deletedCount>0) {
         Swal.fire({
           position: "top-center",
           icon: "success",
           title: "Item removed from Wishlist!",
           showConfirmButton: true,
         });
-      } else {
-        // console.error('Failed to delete item:', response.data);
+        setData((prevData) => prevData.filter((item) => item._id !== itemId));
       }
-    } catch (error) {
-      // console.error('Error removing item:', error);
-      Swal.fire({
-        position: "top-center",
-        icon: "error",
-        title: "Failed to remove item.",
-        showConfirmButton: true,
-      });
-    }
+    });
   };
+
+
 
   const columns = [
     {
@@ -109,8 +108,8 @@ const WishList = () => {
   return (
     <div className="container mx-auto my-10 px-6">
       <Helmet>
-              <title>WishList | BlogSpotter</title>
-            </Helmet>
+        <title>WishList | BlogSpotter</title>
+      </Helmet>
       <h1 className="text-3xl text-center font-bold mb-6">Your Wishlist</h1>
       <DataTable
         columns={columns}

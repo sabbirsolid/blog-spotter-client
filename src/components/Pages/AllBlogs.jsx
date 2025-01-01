@@ -20,21 +20,21 @@ const AllBlogs = () => {
     "Lifestyle",
     "Education",
     "Travel",
-  ]; // Static categories array
+  ];
 
   const numberOfPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
   // Fetch total blog count for pagination
   useEffect(() => {
-    fetch("https://blog-spotter-server.vercel.app/blogsCount")
+    fetch("http://localhost:5000/blogsCount")
       .then((res) => res.json())
       .then((data) => setCount(data.count));
   }, []);
 
   // Fetch blogs based on pagination, category, and search query
   useEffect(() => {
-    const query = `https://blog-spotter-server.vercel.app/blogs?page=${currentPage}&size=${itemsPerPage}${
+    const query = `http://localhost:5000/blogs?page=${currentPage}&size=${itemsPerPage}${
       selectedCategory ? `&category=${selectedCategory}` : ""
     }${searchQuery ? `&search=${searchQuery}` : ""}`;
 
@@ -61,12 +61,9 @@ const AllBlogs = () => {
     e.preventDefault();
     setCurrentPage(0); // Reset to first page when performing a new search
   };
-  // wishlist
-  const handleWishList = (_id) => {
-    const selectedBlog = blogs?.find((blog) => blog._id === _id);
-
+  // adding data to wishlist
+  const handleWishList = (_id, category, title) => {
     if (!user?.email) {
-      // If the user is not logged in, show a warning message
       Swal.fire({
         position: "top-center",
         icon: "warning",
@@ -76,28 +73,41 @@ const AllBlogs = () => {
       return;
     }
 
-    const blogWithUser = { ...selectedBlog, email: user.email }; // Add email to the selected data
-    // console.log(blogWithUser);
-    axios
-      .post("https://blog-spotter-server.vercel.app/wishlist", blogWithUser)
-      .then((res) => {
-        if (res.data.acknowledged) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Added to Wishlist successfully!",
-            showConfirmButton: true,
-          });
-        } else {
-          Swal.fire({
-            position: "top-center",
-            icon: "error",
-            title: "Failed to add to Wishlist.",
-            showConfirmButton: true,
-          });
-        }
-      });
-  };
+    const newWish = {
+      blogId: _id,
+      userName: user.displayName,
+      userEmail: user.email,
+      category,
+      title,
+    };
+
+    axios.post("http://localhost:5000/wishlist", newWish).then((res) => {
+      if (res.status === 200 && res.data.acknowledged) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Added to Wishlist successfully!",
+          showConfirmButton: true,
+        });
+      }
+    }).catch((err) => {
+      if (err.response && err.response.status === 409) {
+        Swal.fire({
+          position: "top-center",
+          icon: "info",
+          title: "This blog is already in your wishlist!",
+          showConfirmButton: true,
+        });
+      } else {
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Failed to add to Wishlist.",
+          showConfirmButton: true,
+        });
+      }
+    });
+};
 
   return (
     <div className="shop-container p-4">
@@ -106,22 +116,23 @@ const AllBlogs = () => {
       </Helmet>
       <h1 className="text-3xl font-bold text-center mb-6">All Blogs</h1>
 
+      {/* Filter Bar */}
       <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
         {/* Search Bar */}
         <form
           onSubmit={handleSearch}
-          className="flex items-center w-full md:w-1/2"
+          className="flex items-center w-full md:w-1/6"
         >
           <input
             type="text"
             placeholder="Search blogs by title"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-grow p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-grow p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           />
           <button
             type="submit"
-            className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm"
           >
             Search
           </button>
@@ -131,7 +142,7 @@ const AllBlogs = () => {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
         >
           <option value="">All Categories</option>
           {categories.map((category) => (
@@ -147,31 +158,35 @@ const AllBlogs = () => {
         {blogs?.map((blog) => (
           <div
             key={blog._id}
-            className="blog-card border rounded-lg p-4 shadow-md"
+            className="blog-card border rounded-lg p-4 shadow-md flex flex-col justify-between"
           >
             <img
               src={blog.imageUrl}
               alt={blog.title}
               className="w-full h-48 object-cover rounded-md"
             />
-            <h2 className="text-xl font-semibold mt-2">{blog.title}</h2>
-            <p className="text-gray-600 mt-1">{blog.shortDescription}</p>
-            <div className="flex items-center justify-between mt-4">
-              <span className="text-sm font-medium text-gray-500">
+            <div className="mt-4">
+              <h2 className="text-lg font-semibold">{blog.title}</h2>
+              <p className="text-gray-600 text-sm mt-2">
+                {blog.shortDescription}
+              </p>
+              <div className="text-sm font-medium text-gray-500 mt-2">
                 {blog.category}
-              </span>
+              </div>
+            </div>
+            <div className="mt-4 flex justify-between items-center">
               <Link to={`/blogs/${blog._id}`}>
-                <button className="text-blue-500 hover:underline">
+                <button className="px-3 py-1 text-blue-500 border border-blue-500 rounded-md text-sm hover:bg-blue-500 hover:text-white">
                   Details
                 </button>
               </Link>
+              <button
+                onClick={() => handleWishList(blog._id, blog.category,blog.title)}
+                className="px-3 py-1 text-gray-600 border border-gray-400 rounded-md text-sm hover:bg-gray-300"
+              >
+                Wishlist
+              </button>
             </div>
-            <button
-              onClick={() => handleWishList(blog._id)}
-              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-            >
-              Add to Wishlist
-            </button>
           </div>
         ))}
       </div>

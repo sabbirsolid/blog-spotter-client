@@ -39,7 +39,7 @@ const UpdatePage = () => {
     e.preventDefault();
 
     // Send the updated blog data to the server
-    fetch(`https://blog-spotter-server.vercel.app/update/${_id}`, {
+    fetch(`http://localhost:5000/update/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
