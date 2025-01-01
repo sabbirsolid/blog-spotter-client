@@ -39,45 +39,46 @@ const UpdatePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.patch(`http://localhost:5000/update/${_id}`,formData,{withCredentials: 'include'})
-    .then(res => {
-      if (res.data.modifiedCount > 0) {
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Your blog has been updated successfully",
-          showConfirmButton: true,
-        });
-      }
-      else{
-        Swal.fire({
-          position: "top-center",
-          icon: "error",
-          title: "Your blog cannot update",
-          showConfirmButton: true,
-        });
-      }
-    })
-
+    axios
+      .patch(`http://localhost:5000/update/${_id}`, formData, {
+        withCredentials: "include",
+      })
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Your blog has been updated successfully",
+            showConfirmButton: true,
+          });
+        } else {
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Your blog could not be updated",
+            showConfirmButton: true,
+          });
+        }
+      });
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br px-4">
       <Helmet>
         <title>Update Blog | BlogSpotter</title>
       </Helmet>
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-lg p-6 w-full max-w-lg space-y-4"
+        className=" shadow-lg rounded-xl p-8 w-full max-w-lg space-y-6 border border-gray-200"
       >
-        <h2 className="text-2xl font-bold text-gray-800 text-center">
+        <h2 className="text-3xl font-semibold  text-center">
           Update Blog
         </h2>
 
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium  mb-1"
           >
             Title
           </label>
@@ -87,7 +88,7 @@ const UpdatePage = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm px-4 py-2"
             placeholder="Enter the blog title"
             required
           />
@@ -96,7 +97,7 @@ const UpdatePage = () => {
         <div>
           <label
             htmlFor="imageUrl"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium  mb-1"
           >
             Image URL
           </label>
@@ -106,7 +107,7 @@ const UpdatePage = () => {
             name="imageUrl"
             value={formData.imageUrl}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm px-4 py-2"
             placeholder="Enter the image URL"
             required
           />
@@ -115,7 +116,7 @@ const UpdatePage = () => {
         <div>
           <label
             htmlFor="category"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium  mb-1"
           >
             Category
           </label>
@@ -124,7 +125,7 @@ const UpdatePage = () => {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm px-4 py-2"
             required
           >
             <option value="">Select a category</option>
@@ -139,7 +140,7 @@ const UpdatePage = () => {
         <div>
           <label
             htmlFor="shortDescription"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-600 mb-1"
           >
             Short Description
           </label>
@@ -148,7 +149,7 @@ const UpdatePage = () => {
             name="shortDescription"
             value={formData.shortDescription}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm px-4 py-2"
             rows="2"
             placeholder="Write a short description"
             required
@@ -158,7 +159,7 @@ const UpdatePage = () => {
         <div>
           <label
             htmlFor="longDescription"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-600 mb-1"
           >
             Long Description
           </label>
@@ -167,7 +168,7 @@ const UpdatePage = () => {
             name="longDescription"
             value={formData.longDescription}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm px-4 py-2"
             rows="4"
             placeholder="Write a detailed description"
             required
@@ -176,9 +177,9 @@ const UpdatePage = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full bg-blue-500 text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-300"
         >
-          Update
+          Update Blog
         </button>
       </form>
     </div>
