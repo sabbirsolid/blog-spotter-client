@@ -9,7 +9,7 @@ const BlogDetails = () => {
   const data = useLoaderData();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const axiosSecure = useAxiosSecure();
+  // const axiosSecure = useAxiosSecure();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
 

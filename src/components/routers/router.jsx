@@ -66,18 +66,20 @@ const router = createBrowserRouter([
     ),
     // loader: ({ params }) =>
     //   fetch(`http://localhost:5000/update/${params.id}`),
-    loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`),
+    loader: ({ params }) => fetch(`http://localhost:5000/update/${params.id}`,{
+      credentials: 'include'
+    }),
   },
   {
     path: "/blogs/:id",
     element: (
       <PrivateRoute>
-        <BlogDetails></BlogDetails>,
+        <BlogDetails></BlogDetails>
       </PrivateRoute>
     ),
     loader: ({ params }) =>
       fetch(`http://localhost:5000/blogs/${params.id}`, {
-        credentials: "include",
+        credentials: "include"
       }),
   },
 

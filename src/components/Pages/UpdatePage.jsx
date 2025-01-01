@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
 const UpdatePage = () => {
   const data = useLoaderData();
@@ -38,25 +39,26 @@ const UpdatePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Send the updated blog data to the server
-    fetch(`http://localhost:5000/update/${_id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+    axios.patch(`http://localhost:5000/update/${_id}`,formData,{withCredentials: 'include'})
+    .then(res => {
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Your blog has been updated successfully",
+          showConfirmButton: true,
+        });
+      }
+      else{
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "Your blog cannot update",
+          showConfirmButton: true,
+        });
+      }
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Your blog has been updated successfully",
-            showConfirmButton: true,
-          });
-        }
-      });
+
   };
 
   return (
