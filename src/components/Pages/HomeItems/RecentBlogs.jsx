@@ -60,7 +60,8 @@ const RecentBlogs = () => {
         });
       }
     });
-};
+  };
+
   return (
     <div className="max-w-screen-xl mx-auto py-8 px-4">
       <motion.h2
@@ -79,23 +80,28 @@ const RecentBlogs = () => {
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="rounded-md shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            className="rounded-md shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
           >
             <img
               src={blog.imageUrl}
               alt={blog.title}
               className="w-full h-40 object-cover rounded-t-md"
             />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-              <p className="text-gray-600 mb-3 text-sm">
-                {blog.shortDescription.length > 80
-                  ? `${blog.shortDescription.slice(0, 80)}...`
-                  : blog.shortDescription}
-              </p>
-              <div className="flex justify-between items-center">
+            <div className="p-4 flex flex-col justify-between flex-grow">
+              <div>
+                <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
+                <p className="text-gray-600 mb-3 text-sm">
+                  {blog.shortDescription.length > 80
+                    ? `${blog.shortDescription.slice(0, 80)}...`
+                    : blog.shortDescription}
+                </p>
+                <p className="text-xs text-gray-500">
+                  Posted on {new Date(blog.postedTime).toLocaleDateString()}
+                </p>
+              </div>
+              <div className="flex justify-between items-center mt-4">
                 <button
-                  onClick={() => handleWishList(blog._id,blog.category, blog.title)}
+                  onClick={() => handleWishList(blog._id, blog.category, blog.title)}
                   className="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition duration-300"
                 >
                   Wishlist
