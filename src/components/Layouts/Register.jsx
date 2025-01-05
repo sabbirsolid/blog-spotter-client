@@ -51,7 +51,8 @@ const Register = () => {
       .then(() => {
         updateProfile(auth.currentUser, { displayName: name, photoURL: photo })
           .then(() => {
-            navigate(location?.state ? location.state : "/");
+            // navigate(location?.state ? location.state : "/");
+            navigate("/");
             Swal.fire({
               position: "top-center",
               icon: "success",
@@ -80,7 +81,8 @@ const Register = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then(() => {
-        navigate(location?.state ? location.state : "/");
+        // navigate(location?.state ? location.state : "/");
+        navigate('/');
         Swal.fire({
           position: "top-center",
           icon: "success",
@@ -228,3 +230,6 @@ const Register = () => {
 };
 
 export default Register;
+
+
+

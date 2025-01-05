@@ -21,7 +21,7 @@ const FeaturedBlogs = () => {
         );
         setData(response.data);
       } catch (error) {
-        console.error("Error fetching featured blogs:", error);
+        // console.error("Error fetching featured blogs:", error);
       } finally {
         setLoading(false); // End loading
       }

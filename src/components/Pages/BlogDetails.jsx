@@ -1,16 +1,23 @@
 import { useState, useEffect, useContext } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  useLoaderData,
+  Link,
+} from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 const BlogDetails = () => {
   const data = useLoaderData();
-  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const { user, loading } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
+  const [blogData, setBlogData] = useState(null);
+  const [dataLoading, setDataLoading] = useState(true);
 
   const {
     title,
@@ -20,32 +27,45 @@ const BlogDetails = () => {
     longDescription,
     _id,
     authorEmail,
-  } = data[0] || {}; 
+  } = data[0] || {};
+
+  useEffect(() => {
+    // Fetch blog data only after the user is authenticated
+    if (user?.email && _id) {
+      setDataLoading(true);
+      fetch(`https://blog-spotter-server.vercel.app/blogs/${_id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // JWT
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setBlogData(data);
+          setDataLoading(false);
+        })
+        .catch((error) => {
+          // console.error("Error fetching blog data:", error);
+          setDataLoading(false);
+        });
+    } else if (!user?.email) {
+      navigate("/login", { state: { from: location } });
+    }
+  }, [_id, user, navigate, location]);
 
   // Fetch comments for the blog
   useEffect(() => {
     if (_id) {
-      setLoading(true); // Set loading true while fetching comments
       fetch(`https://blog-spotter-server.vercel.app/comments/${_id}`)
         .then((res) => res.json())
-        .then((data) => {
-          setComments(data);
-          setLoading(false); // Set loading false once comments are fetched
-        })
+        .then((data) => setComments(data))
         .catch((error) => {
-          console.error("Error fetching comments:", error);
-          setLoading(false); // Handle errors by stopping the loading state
+          // console.error("Error fetching comments:", error)
+          
         });
     }
   }, [_id]);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="loading loading-spinner text-info text-5xl"></div>
-      </div>
-    );
-  }
 
   // Handle comment submission
   const handleCommentSubmit = (e) => {
@@ -102,6 +122,14 @@ const BlogDetails = () => {
   };
 
   const isOwner = user?.email === authorEmail;
+
+  if (loading || dataLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="loading loading-spinner text-info text-5xl"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="blog-details p-4 max-w-7xl mx-auto">

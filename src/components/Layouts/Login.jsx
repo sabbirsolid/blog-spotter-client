@@ -24,7 +24,8 @@ const Login = () => {
         title: "You Logged in successfully!",
         showConfirmButton: true,
       });
-      navigate(location?.state ? location.state : "/");
+      // navigate(location?.state ? location.state : "/");
+      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -44,7 +45,8 @@ const Login = () => {
         title: "You Logged in successfully!",
         showConfirmButton: true,
       });
-      navigate(location?.state ? location.state : "/");
+      // navigate(location?.state ? location.state : "/");
+      navigate("/");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -150,3 +152,109 @@ const Login = () => {
 };
 
 export default Login;
+
+
+// import { useContext, useState } from "react";
+// import { Link, useNavigate, useLocation } from "react-router-dom";
+// import Swal from "sweetalert2";
+// import { Helmet } from "react-helmet-async";
+// import { FaGoogle } from "react-icons/fa";
+// import { AuthContext } from "../Providers/AuthProvider";
+
+// const Login = () => {
+//   const { logIn, signInWithGoogle, loading } = useContext(AuthContext);
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const [error, setError] = useState("");
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+//     const form = e.target;
+//     const email = form.email.value;
+//     const password = form.password.value;
+
+//     try {
+//       await logIn(email, password);
+//       Swal.fire({
+//         icon: "success",
+//         title: "Logged in successfully!",
+//         position: "top-center",
+//       });
+//       navigate(location.state?.from || "/", { replace: true });
+//       form.reset();
+//     } catch (err) {
+//       setError(err.message || "Something went wrong! Please try again.");
+//     }
+//   };
+
+//   const handleSignInWithGoogle = async () => {
+//     try {
+//       await signInWithGoogle();
+//       Swal.fire({
+//         icon: "success",
+//         title: "Logged in successfully!",
+//         position: "top-center",
+//       });
+//       navigate(location.state?.from || "/", { replace: true });
+//     } catch (err) {
+//       setError(err.message || "Something went wrong! Please try again.");
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r">
+//       <Helmet>
+//         <title>Login | BlogSpotter</title>
+//       </Helmet>
+//       <div className="p-8 border rounded-xl shadow-lg w-full max-w-sm">
+//         <h2 className="text-3xl font-semibold text-center mb-6">Login</h2>
+//         {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
+//         <form onSubmit={handleLogin}>
+//           <InputField label="Email" name="email" type="email" required />
+//           <InputField label="Password" name="password" type="password" required />
+//           <div className="mb-6 text-right">
+//             <Link to="/forgot-password" className="text-sm text-blue-500 hover:underline">
+//               Forgot Password?
+//             </Link>
+//           </div>
+//           <button
+//             type="submit"
+//             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+//             disabled={loading}
+//           >
+//             Login
+//           </button>
+//         </form>
+//         <GoogleSignInButton onClick={handleSignInWithGoogle} />
+//         <p className="mt-6 text-center text-sm">
+//           Don't have an account?{" "}
+//           <Link to="/register" className="text-blue-500 hover:underline">
+//             Register
+//           </Link>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// const InputField = ({ label, ...props }) => (
+//   <div className="mb-4">
+//     <label className="block text-sm font-semibold mb-2">{label}</label>
+//     <input
+//       {...props}
+//       className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+//     />
+//   </div>
+// );
+
+// const GoogleSignInButton = ({ onClick }) => (
+//   <button
+//     onClick={onClick}
+//     className="w-full flex gap-1 items-center justify-center bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition mt-4"
+//   >
+//     <FaGoogle />
+//     Sign in with Google
+//   </button>
+// );
+
+// export default Login;

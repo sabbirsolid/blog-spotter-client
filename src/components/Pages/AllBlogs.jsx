@@ -12,8 +12,7 @@ const AllBlogs = () => {
   const [count, setCount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const { user,loading } = useContext(AuthContext);
 
   const categories = [
     "Technology",
@@ -28,19 +27,18 @@ const AllBlogs = () => {
 
   // Fetch total blog count for pagination
   useEffect(() => {
-    setLoading(true);
     fetch("https://blog-spotter-server.vercel.app/blogsCount")
       .then((res) => res.json())
       .then((data) => {
         setCount(data.count);
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        // console.log('error', error.message)
+      });
   }, []);
 
   // Fetch blogs based on pagination, category, and search query
   useEffect(() => {
-    setLoading(true);
     const query = `https://blog-spotter-server.vercel.app/blogs?page=${currentPage}&size=${itemsPerPage}${
       selectedCategory ? `&category=${selectedCategory}` : ""
     }${searchQuery ? `&search=${searchQuery}` : ""}`;
@@ -49,9 +47,11 @@ const AllBlogs = () => {
       .then((res) => res.json())
       .then((data) => {
         setBlogs(data);
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        // console.error('Error')
+      });
+      
   }, [currentPage, itemsPerPage, selectedCategory, searchQuery]);
 
   const handleItemsPerPage = (e) => {
@@ -131,12 +131,8 @@ const AllBlogs = () => {
       </Helmet>
       <h1 className="text-3xl font-bold text-center mb-6">All Blogs</h1>
 
-      {loading ? (
-        <div className="flex justify-center items-center min-h-screen">
-          <div className="loading loading-spinner text-info text-5xl"></div>
-        </div>
-      ) : (
-        <>
+      
+        <div>
           {/* Filter Bar */}
           <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
             {/* Search Bar */}
@@ -254,8 +250,7 @@ const AllBlogs = () => {
               <option value="50">50</option>
             </select>
           </div>
-        </>
-      )}
+        </div>
     </div>
   );
 };
