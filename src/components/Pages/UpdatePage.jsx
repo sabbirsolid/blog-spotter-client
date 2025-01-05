@@ -59,32 +59,6 @@ const UpdatePage = () => {
       }
     });
   };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   axios
-  //     .patch(`https://blog-spotter-server.vercel.app/update/${_id}`, formData, {
-  //       withCredentials: "include",
-  //     })
-  //     .then((res) => {
-  //       if (res.data.modifiedCount > 0) {
-  //         Swal.fire({
-  //           position: "top-center",
-  //           icon: "success",
-  //           title: "Your blog has been updated successfully",
-  //           showConfirmButton: true,
-  //         });
-  //       } else {
-  //         Swal.fire({
-  //           position: "top-center",
-  //           icon: "error",
-  //           title: "Your blog could not be updated",
-  //           showConfirmButton: true,
-  //         });
-  //       }
-  //     });
-  // };
-
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br px-4">
       <Helmet>

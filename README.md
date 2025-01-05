@@ -13,6 +13,7 @@ The Blog Spotter client is a user-facing application where users can interact wi
 - **Framer Motion**: For animations and UI transitions.
 - **React Toastify**: For user notifications.
 - **SweetAlert2**: For interactive alerts.
+- **Helmet**: For page titles.
 
 ## Features (CRUD Operations)
 ### Blogs
@@ -37,4 +38,4 @@ The Blog Spotter client serves as the user interface for the blogging platform, 
 
 ## Live Links
 
-https://blog-spotter.firebaseapp.com
+https://blog-spotter.web.app
