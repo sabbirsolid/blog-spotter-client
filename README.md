@@ -4,7 +4,7 @@
 **Blog Spotter Client** is a user-friendly application for interacting with a blogging platform. It enables users to explore, post, edit, and manage blogs, comment on posts, and maintain a personalized wishlist. The app provides a seamless and intuitive interface for an enhanced blogging experience.  
 🔗 **Live Demo:** [Blog Spotter](https://blog-spotter.web.app/)  
 
-![Discounts Pro Screenshot](https://i.ibb.co.com/Y7dJQHFj/Screenshot-171.png)   
+![Discounts Pro Screenshot](https://i.ibb.co.com/ccSth81L/Screenshot-2025-02-05-164716.png)   
 
 ## 📚 Table of Contents  
 - [Features](#features)  
