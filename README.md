@@ -5,6 +5,7 @@
 🔗 **Live Demo:** [Blog Spotter](https://blog-spotter.web.app/)  
 
 ![Blog Spotter](https://i.ibb.co.com/ZzqFFXLx/1681266195147-Manik-1.jpg)  
+![Discounts Pro Screenshot](https://i.ibb.co.com/WW1kTptd/Screenshot-174.png)  
 
 ## 📚 Table of Contents  
 - [Features](#features)  
