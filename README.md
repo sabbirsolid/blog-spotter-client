@@ -1,6 +1,3 @@
-Here’s a well-structured `README.md` for the **Blog Spotter Client**:  
-
----
 
 # 📖 Blog Spotter Client  
 
