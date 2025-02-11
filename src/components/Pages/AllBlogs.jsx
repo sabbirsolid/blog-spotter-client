@@ -255,13 +255,13 @@
 
 // export default AllBlogs;
 
-
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import { Heart } from "lucide-react";
 
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -313,7 +313,14 @@ const AllBlogs = () => {
       .catch(() => {
         // console.error('Error')
       });
-  }, [currentPage, itemsPerPage, selectedCategory, searchQuery, sortField, sortOrder]);
+  }, [
+    currentPage,
+    itemsPerPage,
+    selectedCategory,
+    searchQuery,
+    sortField,
+    sortOrder,
+  ]);
 
   const handleItemsPerPage = (e) => {
     const val = parseInt(e.target.value);
@@ -409,7 +416,7 @@ const AllBlogs = () => {
             />
             <button
               type="submit"
-              className="ml-2 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm"
+              className="ml-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
             >
               Search
             </button>
@@ -474,18 +481,20 @@ const AllBlogs = () => {
               </div>
               <div className="mt-4 flex justify-between items-center">
                 <Link to={`/blogs/${blog._id}`}>
-                  <button className="px-3 py-1 text-blue-500 border border-blue-500 rounded-md text-sm hover:bg-blue-500 hover:text-white">
+                  <button className="px-3 py-1 text-indigo-600 border border-indigo-600 rounded-md text-sm hover:bg-indigo-500 hover:text-white">
                     Details
                   </button>
                 </Link>
+                
                 <button
                   onClick={() =>
                     handleWishList(blog._id, blog.category, blog.title)
                   }
-                  className="px-3 py-1 text-gray-600 border border-gray-400 rounded-md text-sm hover:bg-gray-300"
+                  className="flex items-center gap-2 px-3 py-1 text-sm font-semibold text-gray-700 border border-gray-400 rounded-lg transition duration-300 hover:bg-gray-100 hover:border-gray-500 active:scale-95"
                 >
-                  Wishlist
+                  <Heart className="w-5 h-5 text-red-500" /> Wishlist
                 </button>
+               
               </div>
             </div>
           ))}

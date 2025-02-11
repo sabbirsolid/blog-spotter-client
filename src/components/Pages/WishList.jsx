@@ -64,13 +64,13 @@ const WishList = () => {
         <div className="flex space-x-2">
           <Link
             to={`/blogs/${row.blogId}`}
-            className="px-2 py-1 text-sm bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+            className="text-indigo-500 btn btn-sm btn-outline"
           >
             Details
           </Link>
           <button
             onClick={() => handleRemove(row._id)}
-            className="px-2 py-1 text-sm bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
+            className="text-red-500 btn btn-sm btn-outline"
           >
             Remove
           </button>

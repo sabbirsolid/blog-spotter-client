@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { motion } from "framer-motion";
+import { Heart } from "lucide-react";
 
 const RecentBlogs = () => {
   const [recent, setRecent] = useState([]);
@@ -71,7 +72,7 @@ const RecentBlogs = () => {
         initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="text-3xl font-bold text-center mb-6"
+        className="text-4xl font-bold text-center mb-10 text-indigo-600"
       >
         Recent Blogs
       </motion.h2>
@@ -103,20 +104,21 @@ const RecentBlogs = () => {
                 </p>
               </div>
               <div className="flex justify-between items-center mt-4">
+                <Link
+                  to={`/blogs/${blog._id}`}
+                  className="px-3 py-1 text-indigo-600 border border-indigo-600 rounded-md text-sm hover:bg-indigo-500 hover:text-white"
+                >
+                  Details
+                </Link>
+               
                 <button
                   onClick={() =>
                     handleWishList(blog._id, blog.category, blog.title)
                   }
-                  className="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-700 transition duration-300"
+                  className="flex items-center gap-2 px-3 py-1 text-sm font-semibold text-gray-700 border border-gray-400 rounded-lg transition duration-300 hover:bg-gray-100 hover:border-gray-500 active:scale-95"
                 >
-                  Wishlist
+                  <Heart className="w-5 h-5 text-red-500" /> Wishlist
                 </button>
-                <Link
-                  to={`/blogs/${blog._id}`}
-                  className="text-gray-700 text-sm hover:underline transition duration-300"
-                >
-                  View Details
-                </Link>
               </div>
             </div>
           </motion.div>

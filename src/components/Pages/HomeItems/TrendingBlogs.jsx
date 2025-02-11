@@ -56,7 +56,7 @@ const TrendingBlogs = () => {
               <div className="mt-auto pt-4 border-t border-gray-200 flex justify-between items-center">
                 <Link
                   to={`/blogs/${blog._id}`}
-                  className="text-indigo-600 font-medium hover:underline"
+                  className="px-3 py-1 text-indigo-600 border border-indigo-600 rounded-md text-sm hover:bg-indigo-500 hover:text-white"
                 >
                   Read More
                 </Link>

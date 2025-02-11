@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../Providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import DataTable from "react-data-table-component";
+import { Heart } from "lucide-react";
 
 const FeaturedBlogs = () => {
   const [data, setData] = useState([]);
@@ -102,15 +103,21 @@ const FeaturedBlogs = () => {
         <div className="flex space-x-2">
           <Link
             to={`/blogs/${row._id}`}
-            className="px-1 py-1 text-sm bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+            className="text-indigo-500 btn btn-sm btn-outline"
           >
             Details
           </Link>
-          <button
+          {/* <button
             onClick={() => handleWishList(row._id, row.category, row.title)}
             className="px-1 py-1 text-sm bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300"
           >
             Wishlist
+          </button> */}
+          <button
+            onClick={() => handleWishList(row._id, row.category, row.title)}
+            className="flex items-center gap-2 px-3 py-1 btn btn-outline btn-sm"
+          >
+            <Heart className="w-5 h-5 text-red-500" /> Wishlist
           </button>
         </div>
       ),
