@@ -16,9 +16,7 @@ const FeaturedBlogs = () => {
     const fetchFeaturedBlogs = async () => {
       setLoading(true); // Start loading
       try {
-        const response = await axios.get(
-          "https://blog-spotter-server.vercel.app/featured"
-        );
+        const response = await axios.get("http://localhost:5000/featured");
         setData(response.data);
       } catch (error) {
         // console.error("Error fetching featured blogs:", error);
@@ -51,7 +49,7 @@ const FeaturedBlogs = () => {
     };
 
     axios
-      .post("https://blog-spotter-server.vercel.app/wishlist", newWish)
+      .post("http://localhost:5000/wishlist", newWish)
       .then((res) => {
         if (res.status === 200 && res.data.acknowledged) {
           Swal.fire({
@@ -128,7 +126,7 @@ const FeaturedBlogs = () => {
   }
 
   return (
-    <div className="container mx-auto my-10 px-2">
+    <div className="container mx-auto  px-2 p-4">
       <Helmet>
         <title>Featured Blogs | BlogSpotter</title>
       </Helmet>

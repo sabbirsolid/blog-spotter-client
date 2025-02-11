@@ -12,7 +12,7 @@ const AllBlogs = () => {
   const [count, setCount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const { user,loading } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   const categories = [
     "Technology",
@@ -27,7 +27,7 @@ const AllBlogs = () => {
 
   // Fetch total blog count for pagination
   useEffect(() => {
-    fetch("https://blog-spotter-server.vercel.app/blogsCount")
+    fetch("http://localhost:5000/blogsCount")
       .then((res) => res.json())
       .then((data) => {
         setCount(data.count);
@@ -39,7 +39,7 @@ const AllBlogs = () => {
 
   // Fetch blogs based on pagination, category, and search query
   useEffect(() => {
-    const query = `https://blog-spotter-server.vercel.app/blogs?page=${currentPage}&size=${itemsPerPage}${
+    const query = `http://localhost:5000/blogs?page=${currentPage}&size=${itemsPerPage}${
       selectedCategory ? `&category=${selectedCategory}` : ""
     }${searchQuery ? `&search=${searchQuery}` : ""}`;
 
@@ -51,7 +51,6 @@ const AllBlogs = () => {
       .catch(() => {
         // console.error('Error')
       });
-      
   }, [currentPage, itemsPerPage, selectedCategory, searchQuery]);
 
   const handleItemsPerPage = (e) => {
@@ -70,7 +69,7 @@ const AllBlogs = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(0); // Reset to first page when performing a new search
+    setCurrentPage(0);
   };
 
   // Adding data to wishlist
@@ -94,7 +93,7 @@ const AllBlogs = () => {
     };
 
     axios
-      .post("https://blog-spotter-server.vercel.app/wishlist", newWish)
+      .post("http://localhost:5000/wishlist", newWish)
       .then((res) => {
         if (res.status === 200 && res.data.acknowledged) {
           Swal.fire({
@@ -125,132 +124,131 @@ const AllBlogs = () => {
   };
 
   return (
-    <div className="shop-container p-4">
+    <div className="shop-container p-4 ">
       <Helmet>
         <title>All Blogs | BlogSpotter</title>
       </Helmet>
       <h1 className="text-3xl font-bold text-center mb-6">All Blogs</h1>
 
-      
-        <div>
-          {/* Filter Bar */}
-          <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
-            {/* Search Bar */}
-            <form
-              onSubmit={handleSearch}
-              className="flex items-center w-full md:w-1/6"
+      <div>
+        {/* Filter Bar */}
+        <div className="filter-bar flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+          {/* Search Bar */}
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center w-full md:w-1/6"
+          >
+            <input
+              type="text"
+              placeholder="Search blogs by title"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-grow p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+            <button
+              type="submit"
+              className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm"
             >
-              <input
-                type="text"
-                placeholder="Search blogs by title"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-grow p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              Search
+            </button>
+          </form>
+
+          {/* Category Filter */}
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Blogs Grid */}
+        <div className="products-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogs?.map((blog) => (
+            <div
+              key={blog._id}
+              className="blog-card border rounded-lg p-4 shadow-md flex flex-col justify-between"
+            >
+              <img
+                src={blog.imageUrl}
+                alt={blog.title}
+                className="w-full h-48 object-cover rounded-md"
               />
-              <button
-                type="submit"
-                className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm"
-              >
-                Search
-              </button>
-            </form>
-
-            {/* Category Filter */}
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-            >
-              <option value="">All Categories</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Blogs Grid */}
-          <div className="products-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogs?.map((blog) => (
-              <div
-                key={blog._id}
-                className="blog-card border rounded-lg p-4 shadow-md flex flex-col justify-between"
-              >
-                <img
-                  src={blog.imageUrl}
-                  alt={blog.title}
-                  className="w-full h-48 object-cover rounded-md"
-                />
-                <div className="mt-4">
-                  <h2 className="text-lg font-semibold">{blog.title}</h2>
-                  <p className="text-gray-600 text-sm mt-2">
-                    {blog.shortDescription}
-                  </p>
-                  <div className="text-sm font-medium text-gray-500 mt-2">
-                    {blog.category}
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-between items-center">
-                  <Link to={`/blogs/${blog._id}`}>
-                    <button className="px-3 py-1 text-blue-500 border border-blue-500 rounded-md text-sm hover:bg-blue-500 hover:text-white">
-                      Details
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() =>
-                      handleWishList(blog._id, blog.category, blog.title)
-                    }
-                    className="px-3 py-1 text-gray-600 border border-gray-400 rounded-md text-sm hover:bg-gray-300"
-                  >
-                    Wishlist
-                  </button>
+              <div className="mt-4">
+                <h2 className="text-lg font-semibold">{blog.title}</h2>
+                <p className="text-gray-600 text-sm mt-2">
+                  {blog.shortDescription}
+                </p>
+                <div className="text-sm font-medium text-gray-500 mt-2">
+                  {blog.category}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="pagination flex flex-col items-center mt-6">
-            <div className="flex gap-2">
-              <button
-                onClick={handlePrevPage}
-                className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
-              >
-                Prev
-              </button>
-              {pages.map((page) => (
+              <div className="mt-4 flex justify-between items-center">
+                <Link to={`/blogs/${blog._id}`}>
+                  <button className="px-3 py-1 text-blue-500 border border-blue-500 rounded-md text-sm hover:bg-blue-500 hover:text-white">
+                    Details
+                  </button>
+                </Link>
                 <button
-                  className={`px-3 py-1 rounded-md ${
-                    currentPage === page
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                  onClick={() => setCurrentPage(page)}
-                  key={page}
+                  onClick={() =>
+                    handleWishList(blog._id, blog.category, blog.title)
+                  }
+                  className="px-3 py-1 text-gray-600 border border-gray-400 rounded-md text-sm hover:bg-gray-300"
                 >
-                  {page + 1}
+                  Wishlist
                 </button>
-              ))}
-              <button
-                onClick={handleNextPage}
-                className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
-              >
-                Next
-              </button>
+              </div>
             </div>
-            <select
-              value={itemsPerPage}
-              onChange={handleItemsPerPage}
-              className="mt-4 p-2 border rounded-md"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-            </select>
-          </div>
+          ))}
         </div>
+
+        {/* Pagination */}
+        <div className="pagination flex flex-col items-center mt-6">
+          <div className="flex gap-2">
+            <button
+              onClick={handlePrevPage}
+              className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
+            >
+              Prev
+            </button>
+            {pages.map((page) => (
+              <button
+                className={`px-3 py-1 rounded-md ${
+                  currentPage === page
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-300 hover:bg-gray-400"
+                }`}
+                onClick={() => setCurrentPage(page)}
+                key={page}
+              >
+                {page + 1}
+              </button>
+            ))}
+            <button
+              onClick={handleNextPage}
+              className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
+            >
+              Next
+            </button>
+          </div>
+          <select
+            value={itemsPerPage}
+            onChange={handleItemsPerPage}
+            className="mt-4 p-2 border rounded-md"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 };

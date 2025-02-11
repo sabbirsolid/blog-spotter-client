@@ -30,7 +30,7 @@ const WishList = () => {
   // Handle Remove Item
   const handleRemove = async (itemId) => {
     axios
-      .delete(`https://blog-spotter-server.vercel.app/wishlist/${itemId}`, {
+      .delete(`http://localhost:5000/wishlist/${itemId}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -80,7 +80,7 @@ const WishList = () => {
   ];
 
   return (
-    <div className="container mx-auto my-10 px-4">
+    <div className="container mx-auto  px-4">
       <Helmet>
         <title>WishList | BlogSpotter</title>
       </Helmet>

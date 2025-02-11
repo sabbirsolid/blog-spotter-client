@@ -19,7 +19,7 @@ const PrivateRoute = ({ children }) => {
     return (
       <div>
         <Navbar></Navbar>
-        {children}
+        <div className="pt-20">{children}</div>
         <Footer></Footer>
       </div>
     );

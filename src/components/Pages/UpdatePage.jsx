@@ -2,7 +2,6 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
 import useAxiosSecure from "../Axios/useAxiosSecure";
 
 const UpdatePage = () => {

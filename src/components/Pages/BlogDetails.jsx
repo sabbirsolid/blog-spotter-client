@@ -33,7 +33,7 @@ const BlogDetails = () => {
     // Fetch blog data only after the user is authenticated
     if (user?.email && _id) {
       setDataLoading(true);
-      fetch(`https://blog-spotter-server.vercel.app/blogs/${_id}`, {
+      fetch(`http://localhost:5000/blogs/${_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -57,12 +57,11 @@ const BlogDetails = () => {
   // Fetch comments for the blog
   useEffect(() => {
     if (_id) {
-      fetch(`https://blog-spotter-server.vercel.app/comments/${_id}`)
+      fetch(`http://localhost:5000/comments/${_id}`)
         .then((res) => res.json())
         .then((data) => setComments(data))
         .catch((error) => {
           // console.error("Error fetching comments:", error)
-          
         });
     }
   }, [_id]);
@@ -88,7 +87,7 @@ const BlogDetails = () => {
     };
 
     // Add the new comment (send to server)
-    fetch("https://blog-spotter-server.vercel.app/comments", {
+    fetch("http://localhost:5000/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

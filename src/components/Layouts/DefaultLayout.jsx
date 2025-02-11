@@ -8,7 +8,7 @@ const DefaultLayout = () => {
       <header>
         <Navbar></Navbar>
       </header>
-      <main>
+      <main className="pt-14">
         <Outlet></Outlet>
       </main>
       <Footer></Footer>
