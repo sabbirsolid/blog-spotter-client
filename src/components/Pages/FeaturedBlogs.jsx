@@ -15,9 +15,11 @@ const FeaturedBlogs = () => {
   // Fetch Featured Blogs Data
   useEffect(() => {
     const fetchFeaturedBlogs = async () => {
-      setLoading(true); // Start loading
+      setLoading(true);
       try {
-        const response = await axios.get("http://localhost:5000/featured");
+        const response = await axios.get(
+          "https://blog-spotter-server.vercel.app/featured"
+        );
         setData(response.data);
       } catch (error) {
         // console.error("Error fetching featured blogs:", error);
@@ -50,7 +52,7 @@ const FeaturedBlogs = () => {
     };
 
     axios
-      .post("http://localhost:5000/wishlist", newWish)
+      .post("https://blog-spotter-server.vercel.app/wishlist", newWish)
       .then((res) => {
         if (res.status === 200 && res.data.acknowledged) {
           Swal.fire({
@@ -100,19 +102,13 @@ const FeaturedBlogs = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <div className="flex space-x-2">
+        <div className="flex gap-2">
           <Link
             to={`/blogs/${row._id}`}
             className="text-indigo-500 btn btn-sm btn-outline"
           >
             Details
           </Link>
-          {/* <button
-            onClick={() => handleWishList(row._id, row.category, row.title)}
-            className="px-1 py-1 text-sm bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300"
-          >
-            Wishlist
-          </button> */}
           <button
             onClick={() => handleWishList(row._id, row.category, row.title)}
             className="flex items-center gap-2 px-3 py-1 btn btn-outline btn-sm"

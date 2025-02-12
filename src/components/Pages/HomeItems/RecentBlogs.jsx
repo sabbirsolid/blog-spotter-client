@@ -12,7 +12,7 @@ const RecentBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/recent-blogs")
+      .get("https://blog-spotter-server.vercel.app/recent-blogs")
       .then((res) => setRecent(res.data));
   }, []);
 
@@ -36,7 +36,7 @@ const RecentBlogs = () => {
     };
 
     axios
-      .post("http://localhost:5000/wishlist", newWish)
+      .post("https://blog-spotter-server.vercel.app/wishlist", newWish)
       .then((res) => {
         if (res.status === 200 && res.data.acknowledged) {
           Swal.fire({
@@ -110,7 +110,7 @@ const RecentBlogs = () => {
                 >
                   Details
                 </Link>
-               
+
                 <button
                   onClick={() =>
                     handleWishList(blog._id, blog.category, blog.title)

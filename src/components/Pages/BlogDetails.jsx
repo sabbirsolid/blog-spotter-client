@@ -33,7 +33,7 @@ const BlogDetails = () => {
     // Fetch blog data only after the user is authenticated
     if (user?.email && _id) {
       setDataLoading(true);
-      fetch(`http://localhost:5000/blogs/${_id}`, {
+      fetch(`https://blog-spotter-server.vercel.app/blogs/${_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const BlogDetails = () => {
   // Fetch comments for the blog
   useEffect(() => {
     if (_id) {
-      fetch(`http://localhost:5000/comments/${_id}`)
+      fetch(`https://blog-spotter-server.vercel.app/comments/${_id}`)
         .then((res) => res.json())
         .then((data) => setComments(data))
         .catch((error) => {
@@ -87,7 +87,7 @@ const BlogDetails = () => {
     };
 
     // Add the new comment (send to server)
-    fetch("http://localhost:5000/comments", {
+    fetch("https://blog-spotter-server.vercel.app/comments", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const BlogDetails = () => {
           className="w-full md:w-1/2 rounded-lg shadow-md object-cover h-80"
         />
         <div className="text-content md:w-1/2">
-          <p className="text-sm text-gray-500 mb-2">{category}</p>
+          <p className="text-sm  mb-2">{category}</p>
           <p className="text-lg font-semibold mb-4">{shortDescription}</p>
           <p className="text-base mb-6">{longDescription}</p>
 

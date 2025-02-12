@@ -8,7 +8,7 @@ const TrendingBlogs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/trending-topics")
+      .get("https://blog-spotter-server.vercel.app/trending-topics")
       .then((res) => {
         setTrendingBlogs(res.data);
       })
@@ -60,9 +60,7 @@ const TrendingBlogs = () => {
                 >
                   Read More
                 </Link>
-                <span className="text-sm">
-                  {blog.commentCount} Comments
-                </span>
+                <span className="text-sm">{blog.commentCount} Comments</span>
               </div>
             </div>
           </motion.div>

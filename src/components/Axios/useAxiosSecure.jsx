@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000//",
+  baseURL: "https://blog-spotter-server.vercel.app//",
   withCredentials: true,
 });
 

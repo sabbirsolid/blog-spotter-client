@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
-import DarkMode from "../DarkMode/DarkMode";
 import { ThemeToggle } from "../DarkMode/ThemeToggle";
 
 const Navbar = () => {
@@ -108,10 +107,10 @@ const Navbar = () => {
         <div className="hidden lg:flex lg:space-x-6">{links}</div>
 
         {/* Navbar End */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-5">
           {user ? (
             <>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center ">
                 {user.photoURL && (
                   <Link>
                     <img
@@ -130,7 +129,7 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <div className="space-x-3">
+            <div className="">
               <Link
                 to="/login"
                 className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
@@ -145,8 +144,9 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-          <ThemeToggle></ThemeToggle>
-          {/* <DarkMode></DarkMode> */}
+          <div className="mt-2">
+            <ThemeToggle></ThemeToggle>
+          </div>
         </div>
       </div>
     </nav>
