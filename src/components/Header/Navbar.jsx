@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
+import DarkMode from "../DarkMode/DarkMode";
+import { ThemeToggle } from "../DarkMode/ThemeToggle";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -143,6 +145,8 @@ const Navbar = () => {
               </Link>
             </div>
           )}
+          <ThemeToggle></ThemeToggle>
+          {/* <DarkMode></DarkMode> */}
         </div>
       </div>
     </nav>

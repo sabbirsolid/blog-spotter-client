@@ -44,10 +44,10 @@ const TrendingBlogs = () => {
             <div className="p-4 flex flex-col flex-grow">
               <div className="flex-grow">
                 <h3 className="text-lg font-semibold mb-2">{blog.title}</h3>
-                <p className="text-sm text-gray-500 mb-3">
+                <p className="text-sm  mb-3">
                   {blog.category} | {blog.commentCount} Comments
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm ">
                   {blog.shortDescription.length > 80
                     ? `${blog.shortDescription.slice(0, 80)}...`
                     : blog.shortDescription}
@@ -60,7 +60,7 @@ const TrendingBlogs = () => {
                 >
                   Read More
                 </Link>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm">
                   {blog.commentCount} Comments
                 </span>
               </div>

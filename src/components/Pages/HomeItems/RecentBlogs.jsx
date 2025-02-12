@@ -94,12 +94,12 @@ const RecentBlogs = () => {
             <div className="p-4 flex flex-col justify-between flex-grow">
               <div>
                 <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-                <p className="text-gray-600 mb-3 text-sm">
+                <p className=" mb-3 text-sm">
                   {blog.shortDescription.length > 80
                     ? `${blog.shortDescription.slice(0, 80)}...`
                     : blog.shortDescription}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs ">
                   Posted on {new Date(blog.postedTime).toLocaleDateString()}
                 </p>
               </div>
@@ -115,7 +115,7 @@ const RecentBlogs = () => {
                   onClick={() =>
                     handleWishList(blog._id, blog.category, blog.title)
                   }
-                  className="flex items-center gap-2 px-3 py-1 text-sm font-semibold text-gray-700 border border-gray-400 rounded-lg transition duration-300 hover:bg-gray-100 hover:border-gray-500 active:scale-95"
+                  className="flex items-center gap-2 px-3 py-1 text-sm font-semibold border border-gray-400 rounded-lg transition duration-300 hover:bg-gray-100 hover:border-gray-500 active:scale-95"
                 >
                   <Heart className="w-5 h-5 text-red-500" /> Wishlist
                 </button>
