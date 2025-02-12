@@ -110,13 +110,13 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           {user ? (
             <>
-              <div className="flex items-center ">
+              <div className="flex gap-2 items-center ">
                 {user.photoURL && (
                   <Link>
                     <img
                       src={user.photoURL}
                       alt="Profile"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-indigo-500 shadow-sm"
+                      className="w-10 h-10  mr-2 rounded-full object-cover border-2 border-indigo-500 shadow-sm"
                     />
                   </Link>
                 )}
@@ -132,7 +132,7 @@ const Navbar = () => {
             <div className="">
               <Link
                 to="/login"
-                className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
+                className="bg-gradient-to-r mr-2 from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
               >
                 Login
               </Link>
