@@ -136,7 +136,7 @@ const AllBlogs = () => {
   };
 
   return (
-    <div className="shop-container p-4">
+    <div className="max-w-screen-2xl mx-auto py-8  p-4">
       <Helmet>
         <title>All Blogs | BlogSpotter</title>
       </Helmet>
@@ -243,7 +243,7 @@ const AllBlogs = () => {
           <div className="flex gap-2">
             <button
               onClick={handlePrevPage}
-              className="px-3 py-1  rounded-md hover:bg-gray-400"
+              className="px-3 py-1 btn btn-sm btn-outline rounded-md "
             >
               Prev
             </button>
@@ -262,7 +262,7 @@ const AllBlogs = () => {
             ))}
             <button
               onClick={handleNextPage}
-              className="px-3 py-1 bg-gray-300 rounded-md hover:bg-gray-400"
+              className="px-3 py-1 btn btn-sm btn-outline rounded-md"
             >
               Next
             </button>
